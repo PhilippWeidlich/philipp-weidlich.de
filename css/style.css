@@ -956,7 +956,7 @@ a {
 }
 
 
-/* --- 10 Rechtstexte (impressum.html / datenschutz.html) ------- */
+/* --- 10 Textseiten (kontakt / datenschutz / rechtliche Hinweise) --- */
 .legal { padding-block: clamp(2.5rem, 7vw, 4.5rem) var(--section-gap); }
 .legal__title {
   margin: var(--space-4) 0 var(--space-6);
