@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+  <url>
+    <loc>https://philipp-weidlich.de/</loc>
+    <!-- PLATZHALTER: Datum bei größeren Änderungen aktualisieren -->
+    <lastmod>2026-07-26</lastmod>
+    <priority>1.0</priority>
+  </url>
+  <url>
+    <loc>https://philipp-weidlich.de/impressum.html</loc>
+    <priority>0.1</priority>
+  </url>
+  <url>
+    <loc>https://philipp-weidlich.de/datenschutz.html</loc>
+    <priority>0.1</priority>
+  </url>
+  <url>
+    <loc>https://philipp-weidlich.de/rechtliche-hinweise.html</loc>
+    <priority>0.1</priority>
+  </url>
+</urlset>

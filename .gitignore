@@ -1,0 +1,21 @@
+# Werkzeug-Konfiguration, gehört nicht ins Repo
+.claude/
+
+# Interne Doku – bleibt lokal, nicht öffentlich
+DOKUMENTATION.md
+
+# Werkzeuge und Konfiguration, die die Seite nicht zum Laufen braucht.
+# Alles hier bleibt lokal erhalten, nur eben nicht öffentlich sichtbar.
+tools/
+.htaccess
+_headers
+assets/favicon-32.png
+assets/fonts/README.txt
+
+# Archive und lokale Ausgaben
+*.zip
+
+# Betriebssystem
+Thumbs.db
+desktop.ini
+.DS_Store

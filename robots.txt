@@ -1,0 +1,6 @@
+# philipp-weidlich.de – keine Tracker, nichts zu verstecken.
+User-agent: *
+Allow: /
+
+
+Sitemap: https://philipp-weidlich.de/sitemap.xml

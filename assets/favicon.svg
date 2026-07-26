@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-label="PW">
+  <!-- Monogramm PW, folgt dem Systemthema (hell/dunkel) -->
+  <style>
+    .bg { fill: #14161a }
+    .fg { fill: #faf9f7 }
+    @media (prefers-color-scheme: dark) {
+      .bg { fill: #eceae5 }
+      .fg { fill: #0e0f11 }
+    }
+  </style>
+  <rect class="bg" width="64" height="64" rx="14"/>
+  <text class="fg" x="32" y="43" text-anchor="middle"
+        font-family="Inter, system-ui, -apple-system, Segoe UI, Helvetica, Arial, sans-serif"
+        font-size="26" font-weight="600" letter-spacing="-1">PW</text>
+</svg>

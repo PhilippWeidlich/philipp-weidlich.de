@@ -1,0 +1,433 @@
+<!doctype html>
+<!-- Hero-Typo umschalten: class="hero-a" (Name dominiert) | class="hero-b" (Aussage dominiert) -->
+<html lang="de" class="hero-a">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <!-- Content-Security-Policy: alles wird lokal ausgeliefert, keine externen Quellen.
+       Als echter HTTP-Header ist die CSP stärker – siehe .htaccess / _headers.
+       (frame-ancestors wirkt ausschließlich als Header, nicht als meta.) -->
+  <meta http-equiv="Content-Security-Policy"
+        content="default-src 'self'; img-src 'self' data:; style-src 'self'; script-src 'self'; font-src 'self'; connect-src 'none'; object-src 'none'; base-uri 'none'; form-action 'none'; frame-src 'none'; upgrade-insecure-requests">
+  <meta name="referrer" content="strict-origin-when-cross-origin">
+  <meta name="color-scheme" content="light dark">
+
+  <!-- ---------- SEO ---------- -->
+  <title>Philipp Weidlich – angehender Fachinformatiker für Systemintegration</title>
+  <meta name="description" content="Philipp Weidlich, angehender Fachinformatiker für Systemintegration in Bad Neuenahr-Ahrweiler: Netzwerke, Server und Hardware, dazu Frontend-Mitgestaltung und Self-Hosting. Projekte und Referenzen.">
+  <meta name="author" content="Philipp Weidlich">
+  <link rel="canonical" href="https://philipp-weidlich.de/">
+  <meta name="robots" content="index, follow, max-image-preview:large">
+  <meta name="theme-color" content="#faf9f7" media="(prefers-color-scheme: light)">
+  <meta name="theme-color" content="#0e0f11" media="(prefers-color-scheme: dark)">
+
+  <!-- ---------- Link-Vorschauen ---------- -->
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="Philipp Weidlich">
+  <meta property="og:locale" content="de_DE">
+  <meta property="og:url" content="https://philipp-weidlich.de/">
+  <meta property="og:title" content="Philipp Weidlich – angehender Fachinformatiker für Systemintegration">
+  <meta property="og:description" content="Netzwerke, Server und Hardware, dazu Frontend-Mitgestaltung und Self-Hosting.">
+  <meta property="og:image" content="https://philipp-weidlich.de/assets/og-image.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:type" content="image/png">
+  <meta property="og:image:alt" content="Philipp Weidlich – angehender Fachinformatiker für Systemintegration">
+
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Philipp Weidlich – angehender Fachinformatiker für Systemintegration">
+  <meta name="twitter:description" content="Netzwerke, Server und Hardware, dazu Frontend-Mitgestaltung und Self-Hosting.">
+  <meta name="twitter:image" content="https://philipp-weidlich.de/assets/og-image.png">
+  <meta name="twitter:image:alt" content="Philipp Weidlich – angehender Fachinformatiker für Systemintegration">
+
+  <!-- ---------- Favicon-Set ---------- -->
+  <link rel="icon" href="assets/favicon.ico" sizes="32x32">
+  <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="assets/apple-touch-icon.png">
+  <link rel="manifest" href="site.webmanifest">
+
+  <!-- ---------- Assets ----------
+       Ein CSS, ein JS, eine Schriftdatei – keine externen Requests.
+       Der Preload startet den Font-Download parallel zum CSS, statt zu warten,
+       bis das Stylesheet geparst ist. crossorigin ist bei Fonts Pflicht,
+       sonst lädt der Browser die Datei zweimal. -->
+  <link rel="preload" href="assets/fonts/InterVariable.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="stylesheet" href="css/style.css">
+  <noscript><link rel="stylesheet" href="css/no-js.css"></noscript>
+  <script src="js/main.js" defer></script>
+
+  <!-- Strukturierte Daten: reine Datenauszeichnung, kein ausführbares Skript. -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Person",
+    "name": "Philipp Weidlich",
+    "url": "https://philipp-weidlich.de/",
+    "jobTitle": "Auszubildender Fachinformatiker für Systemintegration",
+    "email": "mailto:philippweidlich@proton.me",
+    "address": {
+      "@type": "PostalAddress",
+      "addressLocality": "Bad Neuenahr-Ahrweiler",
+      "addressRegion": "Rheinland-Pfalz",
+      "addressCountry": "DE"
+    },
+    "sameAs": ["https://github.com/philippweidlich"],
+    "knowsAbout": [
+      "Systemintegration", "Netzwerktechnik", "Serverhardware",
+      "PC-Hardware", "Arbeitsplatzausstattung", "Client-Einrichtung",
+      "Self-Hosting", "HTML", "CSS", "JavaScript"
+    ]
+  }
+  </script>
+</head>
+
+<body>
+  <a class="skip-link" href="#inhalt">Zum Inhalt springen</a>
+
+  <!-- Messpunkt für den Zustand der Kopfzeile -->
+  <div id="top-sentinel" aria-hidden="true"></div>
+
+  <header class="site-header" id="site-header">
+    <div class="container site-header__inner">
+      <a class="wordmark" href="#top-sentinel">
+        <span class="wordmark__mark" aria-hidden="true">PW</span>
+        <span>Philipp&nbsp;Weidlich</span>
+      </a>
+      <nav class="site-nav" aria-label="Hauptnavigation">
+        <a href="#ueber-mich">Über mich</a>
+        <a href="#referenzen">Referenzen</a>
+        <a href="#projekte">Eigene Projekte</a>
+        <a class="site-nav__key" href="#kontakt">Kontakt</a>
+      </nav>
+    </div>
+  </header>
+
+  <main id="inhalt">
+
+    <!-- ==================== 1. Hero ==================== -->
+    <section class="hero" aria-labelledby="hero-name">
+      <div class="container hero__inner">
+
+        <h1 class="hero__name reveal" id="hero-name">Philipp Weidlich</h1>
+
+        <p class="hero__role reveal">
+          Angehender Fachinformatiker für Systemintegration<span class="sep" aria-hidden="true"> – </span>
+          <span class="hero__role-2">Frontend&nbsp;&amp;&nbsp;Self-Hosting</span>
+        </p>
+
+        <p class="hero__lead reveal">
+          Netzwerke, Server und Hardware sind mein Handwerk. Frontend und eigene
+          Dienste im Self-Hosting kommen dazu – schlank gebaut, ohne unnötigen Überbau.
+        </p>
+
+        <p class="hero__actions reveal">
+          <a class="btn btn--primary" href="#referenzen">Projekte ansehen</a>
+          <a class="btn btn--ghost" href="https://github.com/philippweidlich" target="_blank" rel="noopener noreferrer">
+            GitHub
+            <svg class="icon" viewBox="0 0 16 16" aria-hidden="true" focusable="false">
+              <path d="M6 3h7v7M13 3 3.5 12.5" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+            <span class="vh">(öffnet in neuem Tab)</span>
+          </a>
+        </p>
+
+        <!-- Meta-Zeile: gibt dem Hero Boden, ohne Dekoration -->
+        <ul class="meta-row hero__meta reveal" role="list">
+          <li>
+            <span class="meta-row__k">Standort</span>
+            <span class="meta-row__v">Bad Neuenahr-Ahrweiler</span>
+          </li>
+          <li>
+            <span class="meta-row__k">Schwerpunkt</span>
+            <span class="meta-row__v">Netzwerk &amp; Hardware</span>
+          </li>
+          <li>
+            <span class="meta-row__k">Dazu</span>
+            <span class="meta-row__v">Frontend &amp; Self-Hosting</span>
+          </li>
+        </ul>
+
+      </div>
+    </section>
+
+    <!-- ==================== 2. Über mich ==================== -->
+    <section class="section section--panel" id="ueber-mich" aria-labelledby="ueber-mich-title">
+      <div class="container">
+        <div class="section__head reveal">
+          <p class="label"><span class="label__num">01</span>Über mich</p>
+          <h2 class="section__title" id="ueber-mich-title">Hardware verstehen, Systeme zusammenbringen</h2>
+        </div>
+
+        <div class="section__body prose reveal">
+          <!-- PLATZHALTER: Wortlaut nach Bedarf anpassen -->
+          <p>
+            Ich bin angehender Fachinformatiker für Systemintegration und im dritten
+            Lehrjahr. Hardware ist der Teil, der mich am meisten reizt: Systeme auswählen, aufbauen, verkabeln und zum Laufen bringen –
+            vom High-End-Gaming-PC bis zum Server im Rack.
+          </p>
+          <p>
+            Netzwerke, Router, Switches und Clients gehören für mich zum gleichen Bild.
+            Ich arbeite mich lieber bis zur Ursache durch, als ein Symptom zu übermalen.
+          </p>
+          <p>
+            Beim Frontend bin ich Mitgestalter, kein reiner Webentwickler: HTML, CSS und
+            etwas JavaScript, nah am Standard und bewusst ohne schwere Abhängigkeiten.
+            Privat betreibe ich eigene Dienste im Self-Hosting – daraus entstehen auch
+            meine eigenen Projekte.
+          </p>
+        </div>
+
+        <!-- Schwerpunkte als Kacheln.
+             PLATZHALTER: Zeilen ergänzen, kürzen oder umformulieren. -->
+        <div class="section__body section__body--full reveal">
+          <dl class="facts">
+            <div class="facts__row">
+              <dt>Systemintegration</dt>
+              <dd>Netzwerke, Router und Switches, Clients, Server, Racks und Verkabelung – aufbauen, einrichten, dokumentieren.</dd>
+            </div>
+            <div class="facts__row">
+              <dt>Hardware</dt>
+              <dd>High-End- und Gaming-Systeme: Komponenten auswählen, zusammenstellen, aufbauen, kühlen und Fehler eingrenzen.</dd>
+            </div>
+            <div class="facts__row">
+              <dt>Arbeitsplätze</dt>
+              <dd>Arbeitsplätze modernisieren und komplett einrichten: Hardware auswählen, aufbauen, vernetzen, Software und Benutzerkonten einrichten – bis alles läuft.</dd>
+            </div>
+            <div class="facts__row">
+              <dt>Frontend</dt>
+              <dd>HTML, CSS und Vanilla-JavaScript. Statisch, schnell und wartbar – Mitgestaltung, kein Full-Stack-Anspruch.</dd>
+            </div>
+            <div class="facts__row">
+              <dt>Self-Hosting</dt>
+              <dd>Eigene Dienste betreiben, absichern und aktuell halten. Linux, Reverse Proxy, Backups.</dd>
+            </div>
+          </dl>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==================== 3. Referenzen ====================
+         section--panel = leicht getoentes Band. Die Baender wechseln sich
+         mit der Seitenflaeche ab und ersetzen die Trennlinien. -->
+    <section class="section" id="referenzen" aria-labelledby="referenzen-title">
+      <div class="container">
+        <div class="section__head reveal">
+          <p class="label"><span class="label__num">02</span>Referenzen</p>
+          <h2 class="section__title" id="referenzen-title">Projekte, an denen ich mitgewirkt habe</h2>
+          <p class="section__intro">
+            Diese Seiten sind durch meine Arbeit bei AhrComp entstanden. Die Rechte
+            liegen beim Arbeitgeber und den jeweiligen Auftraggebern – Näheres in den
+            <a class="textlink" href="rechtliche-hinweise.html">rechtlichen Hinweisen</a>.
+          </p>
+        </div>
+
+        <!-- WEITERE REFERENZ HINZUFÜGEN
+             Ein <li class="card reveal"> kopieren und vier Dinge setzen:
+               1. card__label  ehrliche Rollenbeschreibung
+               2. <h3><a href="…">  Projektname + Live-URL
+               3. card__text   1–2 Sätze zum Beitrag
+               4. tags         eingesetzte Technik (optional)
+             Das Raster ordnet sich selbst: die hervorgehobene Karte bleibt
+             oben über die volle Breite, darunter laufen zwei pro Reihe.
+             Bleibt unten eine Karte allein, wird sie automatisch breit. -->
+        <div class="section__body section__body--full">
+          <ul class="cards cards--featured stagger" role="list">
+
+            <!-- Hervorgehoben: aktueller Arbeitsplatz. card--current tönt die
+                 Karte leicht und stellt sie eine Stufe nach vorn. -->
+            <li class="card card--current reveal">
+              <p class="card__label">
+                Aktueller Arbeitsplatz<span class="sep" aria-hidden="true">·</span>Gestaltung &amp; Umsetzung
+              </p>
+              <h3 class="card__title">
+                <a href="https://ahrcomp.de/" target="_blank" rel="noopener noreferrer">
+                  AhrComp
+                  <svg class="icon" viewBox="0 0 16 16" aria-hidden="true" focusable="false">
+                    <path d="M6 3h7v7M13 3 3.5 12.5" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+                  </svg>
+                  <span class="vh">(öffnet in neuem Tab)</span>
+                </a>
+              </h3>
+              <p class="card__text">
+                Webauftritt der IT-Werkstatt, in der ich arbeite: Leistungen,
+                Öffnungszeiten und Kontaktwege übersichtlich auf einer Seite, dazu ein
+                direkter Einstieg in die Fernwartung.
+              </p>
+              <ul class="tags" role="list">
+                <li>HTML</li>
+                <li>CSS</li>
+                <li>JavaScript</li>
+                <li>Responsiv</li>
+              </ul>
+            </li>
+
+            <li class="card reveal">
+              <p class="card__label">Gestaltung &amp; Umsetzung</p>
+              <h3 class="card__title">
+                <a href="https://weinhaus-bunte-kuh.de/" target="_blank" rel="noopener noreferrer">
+                  Weinhaus zur Bunten Kuh
+                  <svg class="icon" viewBox="0 0 16 16" aria-hidden="true" focusable="false">
+                    <path d="M6 3h7v7M13 3 3.5 12.5" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+                  </svg>
+                  <span class="vh">(öffnet in neuem Tab)</span>
+                </a>
+              </h3>
+              <p class="card__text">
+                Auftritt eines Familienbetriebs im Ahrtal: Speisen- und Getränkekarte,
+                Öffnungszeiten, Anfahrt und ein kurzer Weg zur Reservierung.
+              </p>
+              <ul class="tags" role="list">
+                <li>HTML</li>
+                <li>CSS</li>
+                <li>Responsiv</li>
+              </ul>
+            </li>
+
+            <li class="card reveal">
+              <p class="card__label">Gestaltung &amp; Umsetzung</p>
+              <h3 class="card__title">
+                <a href="https://kanzlei-marquenie.de/" target="_blank" rel="noopener noreferrer">
+                  Kanzlei Marquenie
+                  <svg class="icon" viewBox="0 0 16 16" aria-hidden="true" focusable="false">
+                    <path d="M6 3h7v7M13 3 3.5 12.5" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+                  </svg>
+                  <span class="vh">(öffnet in neuem Tab)</span>
+                </a>
+              </h3>
+              <p class="card__text">
+                Seite einer Rechtsanwaltskanzlei bei Bad Neuenahr-Ahrweiler:
+                Rechtsgebiete, Profil und Kontaktwege – sachlich und ohne Ballast.
+              </p>
+              <ul class="tags" role="list">
+                <li>HTML</li>
+                <li>CSS</li>
+                <li>Responsiv</li>
+              </ul>
+            </li>
+
+            <li class="card reveal">
+              <!-- Bewusst zurückhaltender formuliert: hier Mitarbeit, keine
+                   vollständige Umsetzung. -->
+              <p class="card__label">Mitgearbeitet</p>
+              <h3 class="card__title">
+                <a href="https://hotel-alex-ahr.de/" target="_blank" rel="noopener noreferrer">
+                  Hotel Alex an der Ahr
+                  <svg class="icon" viewBox="0 0 16 16" aria-hidden="true" focusable="false">
+                    <path d="M6 3h7v7M13 3 3.5 12.5" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+                  </svg>
+                  <span class="vh">(öffnet in neuem Tab)</span>
+                </a>
+              </h3>
+              <p class="card__text">
+                Vier-Sterne-Hotel in Bad Neuenahr: Zimmer und Suiten, Tagungen,
+                Bar und Freizeitangebote. Mitarbeit am Webauftritt.
+              </p>
+              <ul class="tags" role="list">
+                <li>HTML</li>
+                <li>CSS</li>
+                <li>Responsiv</li>
+              </ul>
+            </li>
+
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==================== 4. Eigene Projekte ==================== -->
+    <section class="section section--panel" id="projekte" aria-labelledby="projekte-title">
+      <div class="container">
+        <div class="section__head reveal">
+          <p class="label"><span class="label__num">03</span>Eigene Projekte</p>
+          <!-- Alternativen, falls das besser passt:
+               "Aus eigenem Bedarf entstanden" · "In der Freizeit gebaut" ·
+               "Privat entwickelt" -->
+          <h2 class="section__title" id="projekte-title">Entstanden aus eigenem Bedarf</h2>
+        </div>
+
+        <div class="section__body section__body--full">
+          <ul class="cards cards--single stagger" role="list">
+            <li class="card card--feature reveal">
+              <p class="card__label">
+                Open Source<span class="sep" aria-hidden="true">·</span>MIT-Lizenz
+              </p>
+              <h3 class="card__title">
+                <!-- PLATZHALTER: Repo-URL prüfen – geraten, evtl. anderer Name -->
+                <a href="https://github.com/philippweidlich/LocalArc" target="_blank" rel="noopener noreferrer">
+                  LocalArc
+                  <svg class="icon" viewBox="0 0 16 16" aria-hidden="true" focusable="false">
+                    <path d="M6 3h7v7M13 3 3.5 12.5" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+                  </svg>
+                  <span class="vh">(öffnet in neuem Tab)</span>
+                </a>
+              </h3>
+              <p class="card__text">
+                Ein Offline-Media-Player, der vollständig in einer einzigen HTML-Datei läuft –
+                keine Installation, kein Server, keine Abhängigkeiten. Entstanden aus dem
+                Wunsch, lokale Medien ohne Cloud und ohne Konto abzuspielen.
+              </p>
+              <ul class="tags" role="list">
+                <li>Single-File-HTML</li>
+                <li>Vanilla JS</li>
+                <li>Offline-first</li>
+                <li>MIT</li>
+              </ul>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- ==================== 5. Footer ==================== -->
+  <footer class="site-footer" id="kontakt">
+    <div class="container site-footer__inner">
+
+      <div class="site-footer__cta reveal">
+        <p class="label"><span class="label__num">04</span>Kontakt</p>
+        <!-- Alternativen, falls eine davon besser klingt:
+             "Ich bin am besten per E-Mail erreichbar."
+             "Für Fragen und Anfragen: einfach eine E-Mail."
+             "Nachrichten erreichen mich per E-Mail." -->
+        <p class="site-footer__lead">
+          Der direkte Weg zu mir ist eine E-Mail.
+        </p>
+
+        <div class="contact-links">
+          <a class="contact-link" href="mailto:philippweidlich@proton.me">
+            <svg class="icon" viewBox="0 0 16 16" aria-hidden="true" focusable="false">
+              <path d="M2 4.5h12v8H2z M2 4.5 8 9l6-4.5" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+            philippweidlich@proton.me
+          </a>
+        </div>
+
+        <!-- Bewusste Trennung: persönlicher Kontakt oben direkt, geschäftliche
+             Aufträge unten über die Firma. Eine reine Firmenadresse würde
+             Bewerbungs- und Abwerbeanfragen ins Postfach des Arbeitgebers
+             leiten – deshalb bleibt die private Adresse der Hauptweg. -->
+        <p class="site-footer__note">
+          Projektaufträge nehme ich nicht privat an. Anfragen dazu laufen über
+          meinen Arbeitgeber:
+          <a class="textlink" href="mailto:weidlich@ahrcomp.de">weidlich@ahrcomp.de</a>
+        </p>
+      </div>
+
+      <div class="site-footer__bottom">
+        <nav class="site-footer__links" aria-label="Footer-Navigation">
+          <a href="https://github.com/philippweidlich" target="_blank" rel="noopener noreferrer">
+            GitHub<span class="vh"> (öffnet in neuem Tab)</span>
+          </a>
+          <a href="impressum.html">Impressum</a>
+          <a href="datenschutz.html">Datenschutz</a>
+          <a href="rechtliche-hinweise.html">Rechtliche Hinweise</a>
+        </nav>
+        <p class="site-footer__legal">© <span data-year>2026</span> Philipp Weidlich</p>
+      </div>
+
+    </div>
+  </footer>
+</body>
+</html>
