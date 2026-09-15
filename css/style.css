@@ -564,6 +564,15 @@ a {
     grid-column: auto;
   }
 }
+/* Breite Referenz (card--wide): belegt wie die hervorgehobene Karte eine
+   ganze Reihe, ohne deren Tönung. Sie verschiebt die Zählung darunter um
+   eins – dann steht die letzte Karte bei ungerader Position allein.
+   .cards doppelt, damit das die Zähl-Regeln oben sicher überstimmt. */
+@media (min-width: 34rem) {
+  .cards.cards--featured > .card--wide { grid-column: 1 / -1; }
+  .cards.cards--featured:has(> .card--wide) > .card:last-child:nth-child(even) { grid-column: auto; }
+  .cards.cards--featured:has(> .card--wide) > .card:last-child:nth-child(odd) { grid-column: 1 / -1; }
+}
 .cards--single,
 .cards--single:is(.cards) { grid-template-columns: 1fr; }
 
