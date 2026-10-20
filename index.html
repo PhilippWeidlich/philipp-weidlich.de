@@ -45,9 +45,9 @@
 
   <!-- ---------- Assets ---------- -->
   <link rel="preload" href="assets/fonts/InterVariable.woff2" as="font" type="font/woff2" crossorigin>
-  <link rel="stylesheet" href="css/style.css?v=2">
-  <noscript><link rel="stylesheet" href="css/no-js.css?v=2"></noscript>
-  <script src="js/main.js?v=2" defer></script>
+  <link rel="stylesheet" href="css/style.css?v=3">
+  <noscript><link rel="stylesheet" href="css/no-js.css?v=3"></noscript>
+  <script src="js/main.js?v=3" defer></script>
 
   <!-- Strukturierte Daten: reine Datenauszeichnung, kein ausführbares Skript. -->
   <script type="application/ld+json">
@@ -197,7 +197,7 @@
           </li>
           <li>
             <span class="stats__k">Referenzen</span>
-            <span class="stats__v"><span data-ref-count>7</span> Webauftritte live</span>
+            <span class="stats__v"><span data-ref-count>8</span> Webauftritte live</span>
           </li>
         </ul>
       </div>
@@ -357,7 +357,10 @@
                ref__idx (fortlaufend), ref__role, Link + Name,
                ref__text, tags, ref__url (Domain ohne https://).
              Das Raster: AhrComp oben über die volle Breite, darunter drei
-             pro Reihe (Tablet zwei). Die Zahl im Hero zählt js/main.js. -->
+             Spalten (Tablet zwei). ref--wide belegt am Desktop zwei Spalten –
+             damit gehen 7 Karten auf: [breit][1] / [1][1][1] / [breit][1].
+             Bei anderer Anzahl die breiten Karten neu verteilen.
+             Die Zahl im Hero zählt js/main.js. -->
         <ul class="refs stagger" role="list">
 
           <!-- Hervorgehoben: aktueller Arbeitsplatz -->
@@ -400,7 +403,7 @@
             </div>
           </li>
 
-          <li class="ref spot reveal">
+          <li class="ref ref--wide spot reveal">
             <div class="ref__top">
               <span class="ref__idx">02</span>
               <span class="ref__role">Gestaltung &amp; Umsetzung</span>
@@ -448,6 +451,27 @@
               <span class="ref__role">Gestaltung &amp; Umsetzung</span>
             </div>
             <h3 class="ref__title">
+              <a href="https://simon-baeckerei.de/" target="_blank" rel="noopener noreferrer">
+                Bäckerei &amp; Café Simon<span class="vh"> (öffnet in neuem Tab)</span>
+              </a>
+            </h3>
+            <p class="ref__text">
+              Auftritt einer Traditionsbäckerei im Ahrtal: Café und Sortiment, drei
+              Filialen mit Öffnungszeiten und einer Live-Anzeige, ob gerade geöffnet
+              ist, dazu ein kurzer Weg zur Vorbestellung.
+            </p>
+            <div class="ref__foot">
+              <ul class="tags" role="list"><li>HTML</li><li>CSS</li><li>JavaScript</li><li>Responsiv</li></ul>
+              <span class="ref__url" aria-hidden="true">simon-baeckerei.de<svg viewBox="0 0 16 16" focusable="false"><path d="M6 3h7v7M13 3 3.5 12.5"/></svg></span>
+            </div>
+          </li>
+
+          <li class="ref spot reveal">
+            <div class="ref__top">
+              <span class="ref__idx">05</span>
+              <span class="ref__role">Gestaltung &amp; Umsetzung</span>
+            </div>
+            <h3 class="ref__title">
               <a href="https://weinhaus-bunte-kuh.de/" target="_blank" rel="noopener noreferrer">
                 Weinhaus zur Bunten Kuh<span class="vh"> (öffnet in neuem Tab)</span>
               </a>
@@ -464,7 +488,7 @@
 
           <li class="ref spot reveal">
             <div class="ref__top">
-              <span class="ref__idx">05</span>
+              <span class="ref__idx">06</span>
               <span class="ref__role">Gestaltung &amp; Umsetzung</span>
             </div>
             <h3 class="ref__title">
@@ -482,9 +506,9 @@
             </div>
           </li>
 
-          <li class="ref spot reveal">
+          <li class="ref ref--wide spot reveal">
             <div class="ref__top">
-              <span class="ref__idx">06</span>
+              <span class="ref__idx">07</span>
               <span class="ref__role">Gestaltung &amp; Umsetzung</span>
             </div>
             <h3 class="ref__title">
@@ -507,7 +531,7 @@
             <!-- Bewusst zurückhaltender formuliert: hier Mitarbeit, keine
                  vollständige Umsetzung. -->
             <div class="ref__top">
-              <span class="ref__idx">07</span>
+              <span class="ref__idx">08</span>
               <span class="ref__role ref__role--muted">Mitgearbeitet</span>
             </div>
             <h3 class="ref__title">

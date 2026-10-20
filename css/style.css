@@ -1116,6 +1116,15 @@ a {
 }
 @media (min-width: 64rem) {
   .refs { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+  /* Breite Karte: zwei Spalten, damit die Reihen ohne Lücke aufgehen */
+  .ref--wide { grid-column: span 2; }
+  .ref--wide .ref__text { max-width: 54ch; }
+  .refs .ref.ref--wide .ref__foot { flex-direction: row; align-items: center; }
+}
+/* Tablet: bleibt unten eine Karte allein, nimmt sie die volle Breite.
+   "gerade", weil die hervorgehobene Karte schon eine ganze Reihe belegt. */
+@media (min-width: 40rem) and (max-width: 63.999rem) {
+  .refs > .ref:last-child:nth-child(even) { grid-column: 1 / -1; }
 }
 
 .ref {
