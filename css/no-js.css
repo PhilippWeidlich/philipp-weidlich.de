@@ -1,7 +1,6 @@
 /* Wird nur über <noscript> geladen: ohne JavaScript gibt es keine
-   Reveal-Animation, also müssen alle Inhalte sofort sichtbar sein. */
+   Einblend-Animation, also müssen alle Inhalte sofort sichtbar sein. */
 .reveal {
   opacity: 1 !important;
-  transform: none !important;
-  transition: none !important;
+  animation: none !important;
 }

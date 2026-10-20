@@ -1,28 +1,22 @@
 <!doctype html>
-<!-- Hero-Typo umschalten: class="hero-a" (Name dominiert) | class="hero-b" (Aussage dominiert) -->
-<html lang="de" class="hero-a">
+<html lang="de">
 <head>
   <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 
-  <!-- Content-Security-Policy: alles wird lokal ausgeliefert, keine externen Quellen.
-       Als echter HTTP-Header ist die CSP stärker – siehe .htaccess / _headers.
-       (frame-ancestors wirkt ausschließlich als Header, nicht als meta.) -->
+  <!-- Content-Security-Policy: alles wird lokal ausgeliefert, keine externen Quellen. -->
   <meta http-equiv="Content-Security-Policy"
         content="default-src 'self'; img-src 'self' data:; style-src 'self'; script-src 'self'; font-src 'self'; connect-src 'none'; object-src 'none'; base-uri 'none'; form-action 'none'; frame-src 'none'; upgrade-insecure-requests">
   <meta name="referrer" content="strict-origin-when-cross-origin">
-  <meta name="color-scheme" content="light dark">
+  <meta name="color-scheme" content="dark">
 
   <!-- ---------- SEO ---------- -->
-  <!-- Bewusst nur der Name: das ist es, was im Browser-Tab steht.
-       Die Suchbegriffe trägt die description unten sowie die H1 der Seite. -->
   <title>Philipp Weidlich</title>
   <meta name="description" content="Philipp Weidlich, angehender Fachinformatiker für Systemintegration in Bad Neuenahr-Ahrweiler: Netzwerke, Server und Hardware, dazu Frontend-Mitgestaltung und Self-Hosting. Projekte und Referenzen.">
   <meta name="author" content="Philipp Weidlich">
   <link rel="canonical" href="https://philipp-weidlich.de/">
   <meta name="robots" content="index, follow, max-image-preview:large">
-  <meta name="theme-color" content="#faf9f7" media="(prefers-color-scheme: light)">
-  <meta name="theme-color" content="#0e0f11" media="(prefers-color-scheme: dark)">
+  <meta name="theme-color" content="#06070a">
 
   <!-- ---------- Link-Vorschauen ---------- -->
   <meta property="og:type" content="website">
@@ -49,15 +43,11 @@
   <link rel="apple-touch-icon" href="assets/apple-touch-icon.png">
   <link rel="manifest" href="site.webmanifest">
 
-  <!-- ---------- Assets ----------
-       Ein CSS, ein JS, eine Schriftdatei – keine externen Requests.
-       Der Preload startet den Font-Download parallel zum CSS, statt zu warten,
-       bis das Stylesheet geparst ist. crossorigin ist bei Fonts Pflicht,
-       sonst lädt der Browser die Datei zweimal. -->
+  <!-- ---------- Assets ---------- -->
   <link rel="preload" href="assets/fonts/InterVariable.woff2" as="font" type="font/woff2" crossorigin>
-  <link rel="stylesheet" href="css/style.css">
-  <noscript><link rel="stylesheet" href="css/no-js.css"></noscript>
-  <script src="js/main.js" defer></script>
+  <link rel="stylesheet" href="css/style.css?v=2">
+  <noscript><link rel="stylesheet" href="css/no-js.css?v=2"></noscript>
+  <script src="js/main.js?v=2" defer></script>
 
   <!-- Strukturierte Daten: reine Datenauszeichnung, kein ausführbares Skript. -->
   <script type="application/ld+json">
@@ -87,6 +77,17 @@
 <body>
   <a class="skip-link" href="#inhalt">Zum Inhalt springen</a>
 
+  <!-- Hintergrund: Raster, Lichtschein, Körnung. Rein dekorativ. -->
+  <div class="backdrop" aria-hidden="true">
+    <div class="backdrop__grid"></div>
+    <div class="backdrop__glow backdrop__glow--a"></div>
+    <div class="backdrop__glow backdrop__glow--b"></div>
+    <div class="backdrop__noise"></div>
+  </div>
+
+  <!-- Lesefortschritt (nur in Browsern mit scroll-gesteuerten Animationen) -->
+  <div class="progress" aria-hidden="true"></div>
+
   <!-- Messpunkt für den Zustand der Kopfzeile -->
   <div id="top-sentinel" aria-hidden="true"></div>
 
@@ -94,9 +95,15 @@
     <div class="container site-header__inner">
       <a class="wordmark" href="#top-sentinel">
         <span class="wordmark__mark" aria-hidden="true">PW</span>
-        <span>Philipp&nbsp;Weidlich</span>
+        <span class="wordmark__name">Philipp&nbsp;Weidlich</span>
       </a>
-      <nav class="site-nav" aria-label="Hauptnavigation">
+
+      <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="site-nav" hidden>
+        <span class="nav-toggle__bars" aria-hidden="true"><i></i><i></i></span>
+        <span class="vh">Menü</span>
+      </button>
+
+      <nav class="site-nav" id="site-nav" aria-label="Hauptnavigation">
         <a href="#ueber-mich">Über mich</a>
         <a href="#referenzen">Referenzen</a>
         <a href="#projekte">Eigene Projekte</a>
@@ -109,115 +116,236 @@
 
     <!-- ==================== 1. Hero ==================== -->
     <section class="hero" aria-labelledby="hero-name">
-      <div class="container hero__inner">
+      <div class="container">
+        <div class="hero__grid">
 
-        <h1 class="hero__name reveal" id="hero-name">Philipp Weidlich</h1>
+          <div class="hero__copy">
+            <p class="chip reveal">
+              <span class="chip__dot" aria-hidden="true"></span>
+              Angehender Fachinformatiker für Systemintegration
+            </p>
 
-        <p class="hero__role reveal">
-          Angehender Fachinformatiker für Systemintegration<span class="sep" aria-hidden="true"> – </span>
-          <span class="hero__role-2">Frontend&nbsp;&amp;&nbsp;Self-Hosting</span>
-        </p>
+            <h1 class="hero__name reveal" id="hero-name">
+              <span>Philipp</span>
+              <span>Weidlich</span>
+            </h1>
 
-        <p class="hero__lead reveal">
-          Netzwerke, Server und Hardware sind mein Handwerk. Frontend und eigene
-          Dienste im Self-Hosting kommen dazu – schlank gebaut, ohne unnötigen Überbau.
-        </p>
+            <p class="hero__tagline reveal">
+              Netzwerke, Server und Hardware sind mein <span class="grad-text">Handwerk</span>.
+            </p>
+            <p class="hero__lead reveal">
+              Frontend und eigene Dienste im Self-Hosting kommen dazu – schlank gebaut,
+              ohne unnötigen Überbau.
+            </p>
 
-        <p class="hero__actions reveal">
-          <a class="btn btn--primary" href="#referenzen">Projekte ansehen</a>
-          <a class="btn btn--ghost" href="https://github.com/philippweidlich" target="_blank" rel="noopener noreferrer">
-            GitHub
-            <svg class="icon" viewBox="0 0 16 16" aria-hidden="true" focusable="false">
-              <path d="M6 3h7v7M13 3 3.5 12.5" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
-            </svg>
-            <span class="vh">(öffnet in neuem Tab)</span>
-          </a>
-        </p>
+            <p class="hero__actions reveal">
+              <a class="btn btn--primary" href="#referenzen">
+                Referenzen ansehen
+                <svg class="btn__icon" viewBox="0 0 16 16" aria-hidden="true" focusable="false">
+                  <path d="M3 8h10M9 4l4 4-4 4" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+              </a>
+              <a class="btn btn--ghost" href="https://github.com/philippweidlich" target="_blank" rel="noopener noreferrer">
+                <svg class="btn__icon btn__icon--lead" viewBox="0 0 16 16" aria-hidden="true" focusable="false">
+                  <path fill="currentColor" d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0 0 16 8c0-4.42-3.58-8-8-8z"/>
+                </svg>
+                GitHub
+                <span class="vh">(öffnet in neuem Tab)</span>
+              </a>
+            </p>
+          </div>
 
-        <!-- Meta-Zeile: gibt dem Hero Boden, ohne Dekoration -->
-        <ul class="meta-row hero__meta reveal" role="list">
+          <!-- Terminal: wiederholt nur Inhalte, die auch im Text stehen –
+               deshalb für Screenreader ausgeblendet. js/main.js tippt die
+               Befehle nach; ohne JS steht alles sofort da. -->
+          <div class="term reveal" aria-hidden="true" data-term>
+            <div class="term__bar">
+              <span class="dots"><i></i><i></i><i></i></span>
+              <span class="term__title">philipp@ahrtal: ~</span>
+              <span class="term__tag">bash</span>
+            </div>
+            <div class="term__body">
+              <div class="tl tl--cmd"><span class="tp">~ $</span><span class="tc">whoami</span></div>
+              <div class="tl">philipp-weidlich</div>
+              <div class="tl tl--gap tl--cmd"><span class="tp">~ $</span><span class="tc">systemctl status philipp</span></div>
+              <div class="tl"><span class="t-ok">●</span> philipp.service – angehender Fachinformatiker</div>
+              <div class="tl tl--kv"><span class="tk">Status:</span><span><span class="t-ok">aktiv (läuft)</span> · AhrComp</span></div>
+              <div class="tl tl--kv"><span class="tk">Fokus:</span><span>Netzwerk · Server · Hardware</span></div>
+              <div class="tl tl--kv"><span class="tk">Dazu:</span><span>Frontend · Self-Hosting</span></div>
+              <div class="tl tl--kv"><span class="tk">Ort:</span><span>Bad Neuenahr-Ahrweiler</span></div>
+              <div class="tl tl--gap tl--cmd"><span class="tp">~ $</span><span class="tc">cat kontakt.txt</span></div>
+              <div class="tl"><span class="t-acc">philippweidlich@proton.me</span></div>
+              <div class="tl tl--gap tl--cmd is-current"><span class="tp">~ $</span><span class="tc"></span></div>
+            </div>
+          </div>
+
+        </div>
+
+        <!-- Eckdaten -->
+        <ul class="stats reveal" role="list">
           <li>
-            <span class="meta-row__k">Standort</span>
-            <span class="meta-row__v">Bad Neuenahr-Ahrweiler</span>
+            <span class="stats__k">Standort</span>
+            <span class="stats__v">Bad Neuenahr-Ahrweiler</span>
           </li>
           <li>
-            <span class="meta-row__k">Schwerpunkt</span>
-            <span class="meta-row__v">Netzwerk &amp; Hardware</span>
+            <span class="stats__k">Schwerpunkt</span>
+            <span class="stats__v">Netzwerk &amp; Hardware</span>
           </li>
           <li>
-            <span class="meta-row__k">Dazu</span>
-            <span class="meta-row__v">Frontend &amp; Self-Hosting</span>
+            <span class="stats__k">Dazu</span>
+            <span class="stats__v">Frontend &amp; Self-Hosting</span>
+          </li>
+          <li>
+            <span class="stats__k">Referenzen</span>
+            <span class="stats__v"><span data-ref-count>7</span> Webauftritte live</span>
           </li>
         </ul>
-
       </div>
     </section>
+
+    <!-- Laufband: Arbeitsfelder. Die zweite Hälfte ist eine Kopie für die
+         nahtlose Schleife und deshalb für Screenreader ausgeblendet. -->
+    <div class="marquee">
+      <div class="marquee__track">
+        <ul class="marquee__list" role="list">
+          <li>Netzwerke</li><li>Router &amp; Switches</li><li>Server &amp; Racks</li>
+          <li>Verkabelung</li><li>Clients</li><li>Hardware</li><li>Linux</li>
+          <li>Reverse Proxy</li><li>Backups</li><li>Self-Hosting</li>
+          <li>HTML</li><li>CSS</li><li>Vanilla JS</li>
+        </ul>
+        <ul class="marquee__list" role="list" aria-hidden="true">
+          <li>Netzwerke</li><li>Router &amp; Switches</li><li>Server &amp; Racks</li>
+          <li>Verkabelung</li><li>Clients</li><li>Hardware</li><li>Linux</li>
+          <li>Reverse Proxy</li><li>Backups</li><li>Self-Hosting</li>
+          <li>HTML</li><li>CSS</li><li>Vanilla JS</li>
+        </ul>
+      </div>
+    </div>
 
     <!-- ==================== 2. Über mich ==================== -->
-    <section class="section section--panel" id="ueber-mich" aria-labelledby="ueber-mich-title">
+    <section class="section" id="ueber-mich" aria-labelledby="ueber-mich-title">
       <div class="container">
-        <div class="section__head reveal">
-          <p class="label"><span class="label__num">01</span>Über mich</p>
-          <h2 class="section__title" id="ueber-mich-title">Hardware verstehen, Systeme zusammenbringen</h2>
+        <div class="sec-head reveal">
+          <p class="eyebrow"><span class="eyebrow__num">01</span><span class="eyebrow__rule" aria-hidden="true"></span>Über mich</p>
+          <h2 class="sec-title" id="ueber-mich-title">Hardware verstehen, <span class="grad-text">Systeme zusammenbringen</span></h2>
         </div>
 
-        <div class="section__body prose reveal">
-          <!-- PLATZHALTER: Wortlaut nach Bedarf anpassen -->
-          <p>
-            Ich bin angehender Fachinformatiker für Systemintegration.
-            Hardware ist der Teil, der mich am meisten reizt: Systeme auswählen, aufbauen, verkabeln und zum Laufen bringen –
-            vom High-End-Gaming-PC bis zum Server im Rack.
-          </p>
-          <p>
-            Netzwerke, Router, Switches und Clients gehören für mich zum gleichen Bild.
-            Ich arbeite mich lieber bis zur Ursache durch, als ein Symptom zu übermalen.
-          </p>
-          <p>
-            Beim Frontend bin ich Mitgestalter, kein reiner Webentwickler: HTML, CSS und
-            etwas JavaScript, nah am Standard und bewusst ohne schwere Abhängigkeiten.
-            Privat betreibe ich eigene Dienste im Self-Hosting – daraus entstehen auch
-            meine eigenen Projekte.
-          </p>
+        <div class="about">
+          <div class="prose reveal">
+            <p class="prose__lead">
+              Ich bin angehender Fachinformatiker für Systemintegration.
+              Hardware ist der Teil, der mich am meisten reizt: Systeme auswählen, aufbauen, verkabeln und zum Laufen bringen –
+              vom High-End-Gaming-PC bis zum Server im Rack.
+            </p>
+            <p>
+              Netzwerke, Router, Switches und Clients gehören für mich zum gleichen Bild.
+              Ich arbeite mich lieber bis zur Ursache durch, als ein Symptom zu übermalen.
+            </p>
+            <p>
+              Beim Frontend bin ich Mitgestalter, kein reiner Webentwickler: HTML, CSS und
+              etwas JavaScript, nah am Standard und bewusst ohne schwere Abhängigkeiten.
+              Privat betreibe ich eigene Dienste im Self-Hosting – daraus entstehen auch
+              meine eigenen Projekte.
+            </p>
+          </div>
+
+          <!-- Datenblatt: fasst nur zusammen, was oben und unten im Text steht -->
+          <aside class="spec spot reveal" aria-label="Kurzprofil">
+            <p class="spec__head">
+              <span class="mono">profil.txt</span>
+              <span class="spec__status"><span class="chip__dot" aria-hidden="true"></span>aktuell</span>
+            </p>
+            <dl class="spec__list">
+              <div><dt>Rolle</dt><dd>Fachinformatiker Systemintegration (angehend)</dd></div>
+              <div><dt>Arbeitgeber</dt><dd>AhrComp, Bad Neuenahr-Ahrweiler</dd></div>
+              <div><dt>Fokus</dt><dd>Netzwerk · Server · Hardware</dd></div>
+              <div><dt>Web</dt><dd>HTML · CSS · Vanilla JS</dd></div>
+              <div><dt>Privat</dt><dd>Self-Hosting: Linux, Reverse Proxy, Backups</dd></div>
+              <div><dt>Kontakt</dt><dd>per E-Mail</dd></div>
+            </dl>
+          </aside>
         </div>
 
-        <!-- Schwerpunkte als Kacheln.
-             PLATZHALTER: Zeilen ergänzen, kürzen oder umformulieren. -->
-        <div class="section__body section__body--full reveal">
-          <dl class="facts">
-            <div class="facts__row">
-              <dt>Systemintegration</dt>
-              <dd>Netzwerke, Router und Switches, Clients, Server, Racks und Verkabelung – aufbauen, einrichten, dokumentieren.</dd>
-            </div>
-            <div class="facts__row">
-              <dt>Hardware</dt>
-              <dd>High-End- und Gaming-Systeme: Komponenten auswählen, zusammenstellen, aufbauen, kühlen und Fehler eingrenzen.</dd>
-            </div>
-            <div class="facts__row">
-              <dt>Arbeitsplätze</dt>
-              <dd>Arbeitsplätze modernisieren und komplett einrichten: Hardware auswählen, aufbauen, vernetzen, Software und Benutzerkonten einrichten – bis alles läuft.</dd>
-            </div>
-            <div class="facts__row">
-              <dt>Frontend</dt>
-              <dd>HTML, CSS und Vanilla-JavaScript. Statisch, schnell und wartbar – Mitgestaltung, kein Full-Stack-Anspruch.</dd>
-            </div>
-            <div class="facts__row">
-              <dt>Self-Hosting</dt>
-              <dd>Eigene Dienste betreiben, absichern und aktuell halten. Linux, Reverse Proxy, Backups.</dd>
-            </div>
-          </dl>
-        </div>
+        <!-- Schwerpunkte als Bento-Raster -->
+        <h3 class="sub-head reveal">Schwerpunkte</h3>
+        <ul class="bento stagger" role="list">
+          <li class="tile tile--wide spot reveal">
+            <!-- Angedeutete Netzwerk-Topologie, rein dekorativ -->
+            <svg class="topo" viewBox="0 0 320 200" aria-hidden="true" focusable="false">
+              <g class="topo__links">
+                <path d="M160 46V70H90V104"/><path d="M160 46V70H230V104"/>
+                <path d="M90 128V150H45V170"/><path d="M90 128V150H135V170"/>
+                <path d="M230 128V150H185V170"/><path d="M230 128V150H275V170"/>
+              </g>
+              <g class="topo__flow">
+                <path pathLength="100" d="M160 46V70H90V104"/><path pathLength="100" d="M160 46V70H230V104"/>
+                <path pathLength="100" d="M90 128V150H45V170"/><path pathLength="100" d="M90 128V150H135V170"/>
+                <path pathLength="100" d="M230 128V150H185V170"/><path pathLength="100" d="M230 128V150H275V170"/>
+              </g>
+              <g class="topo__nodes">
+                <rect class="topo__core" x="124" y="20" width="72" height="26" rx="7"/>
+                <rect x="58" y="104" width="64" height="24" rx="6"/>
+                <rect x="198" y="104" width="64" height="24" rx="6"/>
+                <rect x="27" y="170" width="36" height="18" rx="4"/>
+                <rect x="117" y="170" width="36" height="18" rx="4"/>
+                <rect x="167" y="170" width="36" height="18" rx="4"/>
+                <rect x="257" y="170" width="36" height="18" rx="4"/>
+              </g>
+              <g class="topo__leds">
+                <circle cx="136" cy="33" r="2.4"/><circle cx="69" cy="116" r="2.2"/><circle cx="209" cy="116" r="2.2"/>
+                <circle cx="36" cy="179" r="1.8"/><circle cx="126" cy="179" r="1.8"/><circle cx="176" cy="179" r="1.8"/><circle cx="266" cy="179" r="1.8"/>
+              </g>
+              <g class="topo__labels">
+                <text x="146" y="37">router</text><text x="77" y="120">sw-01</text><text x="217" y="120">sw-02</text>
+              </g>
+            </svg>
+            <span class="tile__icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24" focusable="false"><circle cx="12" cy="5" r="2.2"/><circle cx="5" cy="19" r="2.2"/><circle cx="19" cy="19" r="2.2"/><path d="M12 7.2V12m0 0-5.4 5.4M12 12l5.4 5.4"/></svg>
+            </span>
+            <h4 class="tile__title">Systemintegration</h4>
+            <p class="tile__text">Netzwerke, Router und Switches, Clients, Server, Racks und Verkabelung – aufbauen, einrichten, dokumentieren.</p>
+          </li>
+          <li class="tile spot reveal">
+            <span class="tile__icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24" focusable="false"><rect x="7" y="7" width="10" height="10" rx="1.6"/><path d="M10 3v4M14 3v4M10 17v4M14 17v4M3 10h4M3 14h4M17 10h4M17 14h4"/></svg>
+            </span>
+            <h4 class="tile__title">Hardware</h4>
+            <p class="tile__text">High-End- und Gaming-Systeme: Komponenten auswählen, zusammenstellen, aufbauen, kühlen und Fehler eingrenzen.</p>
+          </li>
+          <li class="tile spot reveal">
+            <span class="tile__icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24" focusable="false"><rect x="3" y="4" width="18" height="12" rx="2"/><path d="M8 20h8M12 16v4"/></svg>
+            </span>
+            <h4 class="tile__title">Arbeitsplätze</h4>
+            <p class="tile__text">Arbeitsplätze modernisieren und komplett einrichten: Hardware auswählen, aufbauen, vernetzen, Software und Benutzerkonten einrichten – bis alles läuft.</p>
+          </li>
+          <li class="tile spot reveal">
+            <span class="tile__icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24" focusable="false"><path d="m8 8-4 4 4 4M16 8l4 4-4 4M13.5 5.5l-3 13"/></svg>
+            </span>
+            <h4 class="tile__title">Frontend</h4>
+            <p class="tile__text">HTML, CSS und Vanilla-JavaScript. Statisch, schnell und wartbar – Mitgestaltung, kein Full-Stack-Anspruch.</p>
+          </li>
+          <li class="tile spot reveal">
+            <span class="tile__icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24" focusable="false"><rect x="4" y="4" width="16" height="6" rx="1.6"/><rect x="4" y="14" width="16" height="6" rx="1.6"/><path d="M8 7h.01M8 17h.01M12 7h4M12 17h4"/></svg>
+            </span>
+            <h4 class="tile__title">Self-Hosting</h4>
+            <p class="tile__text">Eigene Dienste betreiben, absichern und aktuell halten. Linux, Reverse Proxy, Backups.</p>
+          </li>
+        </ul>
       </div>
     </section>
 
-    <!-- ==================== 3. Referenzen ====================
-         section--panel = leicht getoentes Band. Die Baender wechseln sich
-         mit der Seitenflaeche ab und ersetzen die Trennlinien. -->
+    <!-- ==================== 3. Referenzen ==================== -->
     <section class="section" id="referenzen" aria-labelledby="referenzen-title">
       <div class="container">
-        <div class="section__head reveal">
-          <p class="label"><span class="label__num">02</span>Referenzen</p>
-          <h2 class="section__title" id="referenzen-title">Projekte, an denen ich mitgewirkt habe</h2>
-          <p class="section__intro">
+        <div class="sec-head sec-head--split reveal">
+          <div>
+            <p class="eyebrow"><span class="eyebrow__num">02</span><span class="eyebrow__rule" aria-hidden="true"></span>Referenzen</p>
+            <h2 class="sec-title" id="referenzen-title">Projekte, an denen ich <span class="grad-text">mitgewirkt habe</span></h2>
+          </div>
+          <p class="sec-intro">
             Diese Seiten sind durch meine Arbeit bei AhrComp entstanden. Die Rechte
             liegen beim Arbeitgeber und den jeweiligen Auftraggebern – Näheres in den
             <a class="textlink" href="rechtliche-hinweise.html">rechtlichen Hinweisen</a>.
@@ -225,271 +353,298 @@
         </div>
 
         <!-- WEITERE REFERENZ HINZUFÜGEN
-             Ein <li class="card reveal"> kopieren und vier Dinge setzen:
-               1. card__label  ehrliche Rollenbeschreibung
-               2. <h3><a href="…">  Projektname + Live-URL
-               3. card__text   1–2 Sätze zum Beitrag
-               4. tags         eingesetzte Technik (optional)
-             Das Raster ordnet sich selbst: die hervorgehobene Karte bleibt
-             oben über die volle Breite, darunter laufen zwei pro Reihe.
-             Bleibt unten eine Karte allein, wird sie automatisch breit. -->
-        <div class="section__body section__body--full">
-          <ul class="cards cards--featured stagger" role="list">
+             Ein <li class="ref spot reveal"> kopieren und setzen:
+               ref__idx (fortlaufend), ref__role, Link + Name,
+               ref__text, tags, ref__url (Domain ohne https://).
+             Das Raster: AhrComp oben über die volle Breite, darunter drei
+             pro Reihe (Tablet zwei). Die Zahl im Hero zählt js/main.js. -->
+        <ul class="refs stagger" role="list">
 
-            <!-- Hervorgehoben: aktueller Arbeitsplatz. card--current tönt die
-                 Karte leicht und stellt sie eine Stufe nach vorn. -->
-            <li class="card card--current reveal">
-              <p class="card__label">
-                Aktueller Arbeitsplatz<span class="sep" aria-hidden="true">·</span>Gestaltung &amp; Umsetzung
-              </p>
-              <h3 class="card__title">
+          <!-- Hervorgehoben: aktueller Arbeitsplatz -->
+          <li class="ref ref--featured spot reveal">
+            <div class="ref__main">
+              <div class="ref__top">
+                <span class="ref__idx">01</span>
+                <span class="badge"><span class="chip__dot" aria-hidden="true"></span>Aktueller Arbeitsplatz</span>
+                <span class="ref__role">Gestaltung &amp; Umsetzung</span>
+              </div>
+              <h3 class="ref__title">
                 <a href="https://ahrcomp.de/" target="_blank" rel="noopener noreferrer">
-                  AhrComp
-                  <svg class="icon" viewBox="0 0 16 16" aria-hidden="true" focusable="false">
-                    <path d="M6 3h7v7M13 3 3.5 12.5" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
-                  </svg>
-                  <span class="vh">(öffnet in neuem Tab)</span>
+                  AhrComp<span class="vh"> (öffnet in neuem Tab)</span>
                 </a>
               </h3>
-              <p class="card__text">
+              <p class="ref__text">
                 Webauftritt der IT-Werkstatt, in der ich arbeite: Leistungen,
                 Öffnungszeiten und Kontaktwege übersichtlich auf einer Seite, dazu ein
                 direkter Einstieg in die Fernwartung.
               </p>
-              <ul class="tags" role="list">
-                <li>HTML</li>
-                <li>CSS</li>
-                <li>JavaScript</li>
-                <li>Responsiv</li>
-              </ul>
-            </li>
+              <div class="ref__foot">
+                <ul class="tags" role="list"><li>HTML</li><li>CSS</li><li>JavaScript</li><li>Responsiv</li></ul>
+                <span class="ref__url" aria-hidden="true">ahrcomp.de<svg viewBox="0 0 16 16" focusable="false"><path d="M6 3h7v7M13 3 3.5 12.5"/></svg></span>
+              </div>
+            </div>
+            <!-- Abstraktes Fenster – kein Screenshot, bewusst ohne Kundendaten -->
+            <div class="window" aria-hidden="true">
+              <div class="window__bar">
+                <span class="dots"><i></i><i></i><i></i></span>
+                <span class="window__url"><svg viewBox="0 0 16 16" focusable="false"><rect x="3.5" y="7" width="9" height="6.5" rx="1.2"/><path d="M5.5 7V5.2a2.5 2.5 0 0 1 5 0V7"/></svg>ahrcomp.de</span>
+              </div>
+              <div class="window__body">
+                <span class="sk sk--nav"></span>
+                <span class="sk sk--h1"></span>
+                <span class="sk sk--line"></span>
+                <span class="sk sk--line sk--short"></span>
+                <span class="sk sk--btn"></span>
+                <span class="sk-grid"><span></span><span></span><span></span></span>
+              </div>
+            </div>
+          </li>
 
-            <!-- Breit wie AhrComp, aber ohne Tönung: card--wide. -->
-            <li class="card card--wide reveal">
-              <p class="card__label">Gestaltung &amp; Umsetzung</p>
-              <h3 class="card__title">
-                <a href="https://floral-design-store.de/" target="_blank" rel="noopener noreferrer">
-                  Floral Design Store
-                  <svg class="icon" viewBox="0 0 16 16" aria-hidden="true" focusable="false">
-                    <path d="M6 3h7v7M13 3 3.5 12.5" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
-                  </svg>
-                  <span class="vh">(öffnet in neuem Tab)</span>
-                </a>
-              </h3>
-              <p class="card__text">
-                Auftritt eines Floristen in Bad Neuenahr: Hochzeits- und
-                Trauerfloristik, Events, Innenbegrünung und Workshops, dazu eine
-                Galerie, Aktionen und ein direkter Weg zur Anfrage.
-              </p>
-              <ul class="tags" role="list">
-                <li>HTML</li>
-                <li>CSS</li>
-                <li>JavaScript</li>
-                <li>Responsiv</li>
-              </ul>
-            </li>
+          <li class="ref spot reveal">
+            <div class="ref__top">
+              <span class="ref__idx">02</span>
+              <span class="ref__role">Gestaltung &amp; Umsetzung</span>
+            </div>
+            <h3 class="ref__title">
+              <a href="https://floral-design-store.de/" target="_blank" rel="noopener noreferrer">
+                Floral Design Store<span class="vh"> (öffnet in neuem Tab)</span>
+              </a>
+            </h3>
+            <p class="ref__text">
+              Auftritt eines Floristen in Bad Neuenahr: Hochzeits- und
+              Trauerfloristik, Events, Innenbegrünung und Workshops, dazu eine
+              Galerie, Aktionen und ein direkter Weg zur Anfrage.
+            </p>
+            <div class="ref__foot">
+              <ul class="tags" role="list"><li>HTML</li><li>CSS</li><li>JavaScript</li><li>Responsiv</li></ul>
+              <span class="ref__url" aria-hidden="true">floral-design-store.de<svg viewBox="0 0 16 16" focusable="false"><path d="M6 3h7v7M13 3 3.5 12.5"/></svg></span>
+            </div>
+          </li>
 
-            <li class="card reveal">
-              <p class="card__label">Gestaltung &amp; Umsetzung</p>
-              <h3 class="card__title">
-                <a href="https://physio-plus-aw.de/" target="_blank" rel="noopener noreferrer">
-                  Physio Plus
-                  <svg class="icon" viewBox="0 0 16 16" aria-hidden="true" focusable="false">
-                    <path d="M6 3h7v7M13 3 3.5 12.5" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
-                  </svg>
-                  <span class="vh">(öffnet in neuem Tab)</span>
-                </a>
-              </h3>
-              <p class="card__text">
-                Auftritt einer Physiotherapiepraxis in Ahrweiler: Therapieangebote,
-                Präventionskurse und Hausbesuche, dazu ein Rundgang durch die Praxis,
-                ein Fristenrechner fürs Rezept und ein kurzer Weg zur Terminanfrage.
-              </p>
-              <ul class="tags" role="list">
-                <li>HTML</li>
-                <li>CSS</li>
-                <li>JavaScript</li>
-                <li>Responsiv</li>
-              </ul>
-            </li>
+          <li class="ref spot reveal">
+            <div class="ref__top">
+              <span class="ref__idx">03</span>
+              <span class="ref__role">Gestaltung &amp; Umsetzung</span>
+            </div>
+            <h3 class="ref__title">
+              <a href="https://physio-plus-aw.de/" target="_blank" rel="noopener noreferrer">
+                Physio Plus<span class="vh"> (öffnet in neuem Tab)</span>
+              </a>
+            </h3>
+            <p class="ref__text">
+              Auftritt einer Physiotherapiepraxis in Ahrweiler: Therapieangebote,
+              Präventionskurse und Hausbesuche, dazu ein Rundgang durch die Praxis,
+              ein Fristenrechner fürs Rezept und ein kurzer Weg zur Terminanfrage.
+            </p>
+            <div class="ref__foot">
+              <ul class="tags" role="list"><li>HTML</li><li>CSS</li><li>JavaScript</li><li>Responsiv</li></ul>
+              <span class="ref__url" aria-hidden="true">physio-plus-aw.de<svg viewBox="0 0 16 16" focusable="false"><path d="M6 3h7v7M13 3 3.5 12.5"/></svg></span>
+            </div>
+          </li>
 
-            <li class="card reveal">
-              <p class="card__label">Gestaltung &amp; Umsetzung</p>
-              <h3 class="card__title">
-                <a href="https://weinhaus-bunte-kuh.de/" target="_blank" rel="noopener noreferrer">
-                  Weinhaus zur Bunten Kuh
-                  <svg class="icon" viewBox="0 0 16 16" aria-hidden="true" focusable="false">
-                    <path d="M6 3h7v7M13 3 3.5 12.5" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
-                  </svg>
-                  <span class="vh">(öffnet in neuem Tab)</span>
-                </a>
-              </h3>
-              <p class="card__text">
-                Auftritt eines Familienbetriebs im Ahrtal: Speisen- und Getränkekarte,
-                Öffnungszeiten, Anfahrt und ein kurzer Weg zur Reservierung.
-              </p>
-              <ul class="tags" role="list">
-                <li>HTML</li>
-                <li>CSS</li>
-                <li>Responsiv</li>
-              </ul>
-            </li>
+          <li class="ref spot reveal">
+            <div class="ref__top">
+              <span class="ref__idx">04</span>
+              <span class="ref__role">Gestaltung &amp; Umsetzung</span>
+            </div>
+            <h3 class="ref__title">
+              <a href="https://weinhaus-bunte-kuh.de/" target="_blank" rel="noopener noreferrer">
+                Weinhaus zur Bunten Kuh<span class="vh"> (öffnet in neuem Tab)</span>
+              </a>
+            </h3>
+            <p class="ref__text">
+              Auftritt eines Familienbetriebs im Ahrtal: Speisen- und Getränkekarte,
+              Öffnungszeiten, Anfahrt und ein kurzer Weg zur Reservierung.
+            </p>
+            <div class="ref__foot">
+              <ul class="tags" role="list"><li>HTML</li><li>CSS</li><li>Responsiv</li></ul>
+              <span class="ref__url" aria-hidden="true">weinhaus-bunte-kuh.de<svg viewBox="0 0 16 16" focusable="false"><path d="M6 3h7v7M13 3 3.5 12.5"/></svg></span>
+            </div>
+          </li>
 
-            <li class="card reveal">
-              <p class="card__label">Gestaltung &amp; Umsetzung</p>
-              <h3 class="card__title">
-                <a href="https://kanzlei-marquenie.de/" target="_blank" rel="noopener noreferrer">
-                  Kanzlei Marquenie
-                  <svg class="icon" viewBox="0 0 16 16" aria-hidden="true" focusable="false">
-                    <path d="M6 3h7v7M13 3 3.5 12.5" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
-                  </svg>
-                  <span class="vh">(öffnet in neuem Tab)</span>
-                </a>
-              </h3>
-              <p class="card__text">
-                Seite einer Rechtsanwaltskanzlei bei Bad Neuenahr-Ahrweiler:
-                Rechtsgebiete, Profil und Kontaktwege – sachlich und ohne Ballast.
-              </p>
-              <ul class="tags" role="list">
-                <li>HTML</li>
-                <li>CSS</li>
-                <li>Responsiv</li>
-              </ul>
-            </li>
+          <li class="ref spot reveal">
+            <div class="ref__top">
+              <span class="ref__idx">05</span>
+              <span class="ref__role">Gestaltung &amp; Umsetzung</span>
+            </div>
+            <h3 class="ref__title">
+              <a href="https://kanzlei-marquenie.de/" target="_blank" rel="noopener noreferrer">
+                Kanzlei Marquenie<span class="vh"> (öffnet in neuem Tab)</span>
+              </a>
+            </h3>
+            <p class="ref__text">
+              Seite einer Rechtsanwaltskanzlei bei Bad Neuenahr-Ahrweiler:
+              Rechtsgebiete, Profil und Kontaktwege – sachlich und ohne Ballast.
+            </p>
+            <div class="ref__foot">
+              <ul class="tags" role="list"><li>HTML</li><li>CSS</li><li>Responsiv</li></ul>
+              <span class="ref__url" aria-hidden="true">kanzlei-marquenie.de<svg viewBox="0 0 16 16" focusable="false"><path d="M6 3h7v7M13 3 3.5 12.5"/></svg></span>
+            </div>
+          </li>
 
-            <li class="card reveal">
-              <p class="card__label">Gestaltung &amp; Umsetzung</p>
-              <h3 class="card__title">
-                <a href="https://schaefer-steuerberater.com/" target="_blank" rel="noopener noreferrer">
-                  Steuerberater Schäfer
-                  <svg class="icon" viewBox="0 0 16 16" aria-hidden="true" focusable="false">
-                    <path d="M6 3h7v7M13 3 3.5 12.5" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
-                  </svg>
-                  <span class="vh">(öffnet in neuem Tab)</span>
-                </a>
-              </h3>
-              <p class="card__text">
-                Auftritt eines Steuerberaters in Bad Neuenahr-Ahrweiler: Leistungen
-                für Privatpersonen, Freiberufler und Unternehmen, dazu ein kurzer
-                Weg zur Terminvereinbarung.
-              </p>
-              <ul class="tags" role="list">
-                <li>HTML</li>
-                <li>CSS</li>
-                <li>Responsiv</li>
-              </ul>
-            </li>
+          <li class="ref spot reveal">
+            <div class="ref__top">
+              <span class="ref__idx">06</span>
+              <span class="ref__role">Gestaltung &amp; Umsetzung</span>
+            </div>
+            <h3 class="ref__title">
+              <a href="https://schaefer-steuerberater.com/" target="_blank" rel="noopener noreferrer">
+                Steuerberater Schäfer<span class="vh"> (öffnet in neuem Tab)</span>
+              </a>
+            </h3>
+            <p class="ref__text">
+              Auftritt eines Steuerberaters in Bad Neuenahr-Ahrweiler: Leistungen
+              für Privatpersonen, Freiberufler und Unternehmen, dazu ein kurzer
+              Weg zur Terminvereinbarung.
+            </p>
+            <div class="ref__foot">
+              <ul class="tags" role="list"><li>HTML</li><li>CSS</li><li>Responsiv</li></ul>
+              <span class="ref__url" aria-hidden="true">schaefer-steuerberater.com<svg viewBox="0 0 16 16" focusable="false"><path d="M6 3h7v7M13 3 3.5 12.5"/></svg></span>
+            </div>
+          </li>
 
-            <li class="card reveal">
-              <!-- Bewusst zurückhaltender formuliert: hier Mitarbeit, keine
-                   vollständige Umsetzung. -->
-              <p class="card__label">Mitgearbeitet</p>
-              <h3 class="card__title">
-                <a href="https://hotel-alex-ahr.de/" target="_blank" rel="noopener noreferrer">
-                  Hotel Alex an der Ahr
-                  <svg class="icon" viewBox="0 0 16 16" aria-hidden="true" focusable="false">
-                    <path d="M6 3h7v7M13 3 3.5 12.5" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
-                  </svg>
-                  <span class="vh">(öffnet in neuem Tab)</span>
-                </a>
-              </h3>
-              <p class="card__text">
-                Vier-Sterne-Hotel in Bad Neuenahr: Zimmer und Suiten, Tagungen,
-                Bar und Freizeitangebote. Mitarbeit am Webauftritt.
-              </p>
-              <ul class="tags" role="list">
-                <li>HTML</li>
-                <li>CSS</li>
-                <li>Responsiv</li>
-              </ul>
-            </li>
+          <li class="ref spot reveal">
+            <!-- Bewusst zurückhaltender formuliert: hier Mitarbeit, keine
+                 vollständige Umsetzung. -->
+            <div class="ref__top">
+              <span class="ref__idx">07</span>
+              <span class="ref__role ref__role--muted">Mitgearbeitet</span>
+            </div>
+            <h3 class="ref__title">
+              <a href="https://hotel-alex-ahr.de/" target="_blank" rel="noopener noreferrer">
+                Hotel Alex an der Ahr<span class="vh"> (öffnet in neuem Tab)</span>
+              </a>
+            </h3>
+            <p class="ref__text">
+              Vier-Sterne-Hotel in Bad Neuenahr: Zimmer und Suiten, Tagungen,
+              Bar und Freizeitangebote. Mitarbeit am Webauftritt.
+            </p>
+            <div class="ref__foot">
+              <ul class="tags" role="list"><li>HTML</li><li>CSS</li><li>Responsiv</li></ul>
+              <span class="ref__url" aria-hidden="true">hotel-alex-ahr.de<svg viewBox="0 0 16 16" focusable="false"><path d="M6 3h7v7M13 3 3.5 12.5"/></svg></span>
+            </div>
+          </li>
 
-          </ul>
-        </div>
+        </ul>
       </div>
     </section>
 
     <!-- ==================== 4. Eigene Projekte ==================== -->
-    <section class="section section--panel" id="projekte" aria-labelledby="projekte-title">
+    <section class="section" id="projekte" aria-labelledby="projekte-title">
       <div class="container">
-        <div class="section__head reveal">
-          <p class="label"><span class="label__num">03</span>Eigene Projekte</p>
-          <!-- Alternativen, falls das besser passt:
-               "Aus eigenem Bedarf entstanden" · "In der Freizeit gebaut" ·
-               "Privat entwickelt" -->
-          <h2 class="section__title" id="projekte-title">Entstanden aus eigenem Bedarf</h2>
+        <div class="sec-head reveal">
+          <p class="eyebrow"><span class="eyebrow__num">03</span><span class="eyebrow__rule" aria-hidden="true"></span>Eigene Projekte</p>
+          <h2 class="sec-title" id="projekte-title">Entstanden aus <span class="grad-text">eigenem Bedarf</span></h2>
         </div>
 
-        <div class="section__body section__body--full">
-          <ul class="cards cards--single stagger" role="list">
-            <li class="card card--feature reveal">
-              <p class="card__label">
-                Open Source<span class="sep" aria-hidden="true">·</span>MIT-Lizenz
-              </p>
-              <h3 class="card__title">
-                <!-- PLATZHALTER: Repo-URL prüfen – geraten, evtl. anderer Name -->
-                <a href="https://github.com/philippweidlich/LocalArc" target="_blank" rel="noopener noreferrer">
-                  LocalArc
-                  <svg class="icon" viewBox="0 0 16 16" aria-hidden="true" focusable="false">
-                    <path d="M6 3h7v7M13 3 3.5 12.5" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
-                  </svg>
-                  <span class="vh">(öffnet in neuem Tab)</span>
-                </a>
-              </h3>
-              <p class="card__text">
-                Ein Offline-Media-Player, der vollständig in einer einzigen HTML-Datei läuft –
-                keine Installation, kein Server, keine Abhängigkeiten. Entstanden aus dem
-                Wunsch, lokale Medien ohne Cloud und ohne Konto abzuspielen.
-              </p>
-              <ul class="tags" role="list">
-                <li>Single-File-HTML</li>
-                <li>Vanilla JS</li>
-                <li>Offline-first</li>
-                <li>MIT</li>
-              </ul>
-            </li>
-          </ul>
+        <article class="project spot reveal">
+          <div class="project__copy">
+            <div class="ref__top">
+              <span class="badge badge--plain">Open Source</span>
+              <span class="ref__role">MIT-Lizenz</span>
+            </div>
+            <h3 class="project__title">
+              <!-- PLATZHALTER: Repo-URL prüfen – geraten, evtl. anderer Name -->
+              <a href="https://github.com/philippweidlich/LocalArc" target="_blank" rel="noopener noreferrer">
+                LocalArc<span class="vh"> (öffnet in neuem Tab)</span>
+              </a>
+            </h3>
+            <p class="project__text">
+              Ein Offline-Media-Player, der vollständig in einer einzigen HTML-Datei läuft –
+              keine Installation, kein Server, keine Abhängigkeiten. Entstanden aus dem
+              Wunsch, lokale Medien ohne Cloud und ohne Konto abzuspielen.
+            </p>
+            <ul class="project__facts" role="list">
+              <li><span class="project__num">1</span><span>HTML-Datei</span></li>
+              <li><span class="project__num">0</span><span>Abhängigkeiten</span></li>
+              <li><span class="project__num">0</span><span>Server</span></li>
+            </ul>
+            <div class="ref__foot">
+              <ul class="tags" role="list"><li>Single-File-HTML</li><li>Vanilla JS</li><li>Offline-first</li><li>MIT</li></ul>
+              <span class="ref__url" aria-hidden="true">github.com/philippweidlich<svg viewBox="0 0 16 16" focusable="false"><path d="M6 3h7v7M13 3 3.5 12.5"/></svg></span>
+            </div>
+          </div>
+
+          <!-- Angedeutete Player-Oberfläche, rein dekorativ -->
+          <div class="player" aria-hidden="true">
+            <div class="player__bar">
+              <span class="dots"><i></i><i></i><i></i></span>
+              <span class="player__file">localarc.html</span>
+              <span class="player__off">offline</span>
+            </div>
+            <div class="player__now">
+              <span class="player__art"></span>
+              <span class="player__meta">
+                <span class="player__track">Lokale Medien</span>
+                <span class="player__sub">ohne Cloud · ohne Konto</span>
+              </span>
+            </div>
+            <div class="wave">
+              <i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i>
+              <i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i>
+              <i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i>
+              <i></i><i></i><i></i><i></i><i></i><i></i>
+            </div>
+            <div class="player__time"><span>1:24</span><span class="player__track-bar"><span></span></span><span>3:52</span></div>
+            <div class="player__controls">
+              <svg viewBox="0 0 24 24" focusable="false"><path d="M7 6v12M18 6l-8 6 8 6z"/></svg>
+              <span class="player__play"><svg viewBox="0 0 24 24" focusable="false"><path d="M9 7v10M15 7v10"/></svg></span>
+              <svg viewBox="0 0 24 24" focusable="false"><path d="M17 6v12M6 6l8 6-8 6z"/></svg>
+            </div>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <!-- ==================== 5. Kontakt ==================== -->
+    <section class="section section--contact" id="kontakt" aria-labelledby="kontakt-title">
+      <div class="container">
+        <div class="contact spot reveal">
+          <div class="contact__glow" aria-hidden="true"></div>
+          <p class="eyebrow eyebrow--center"><span class="eyebrow__num">04</span><span class="eyebrow__rule" aria-hidden="true"></span>Kontakt</p>
+          <h2 class="contact__title" id="kontakt-title">
+            Der direkte Weg zu mir ist eine <span class="grad-text">E-Mail</span>.
+          </h2>
+
+          <div class="contact__actions">
+            <a class="btn btn--primary btn--lg" href="mailto:philippweidlich@proton.me">
+              <svg class="btn__icon btn__icon--lead" viewBox="0 0 16 16" aria-hidden="true" focusable="false">
+                <path d="M2 4.5h12v8H2z M2 4.5 8 9l6-4.5" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+              philippweidlich@proton.me
+            </a>
+            <!-- Kopier-Knopf erscheint nur mit JavaScript -->
+            <button class="btn btn--ghost btn--lg" type="button" data-copy="philippweidlich@proton.me" hidden>
+              <svg class="btn__icon btn__icon--lead" viewBox="0 0 16 16" aria-hidden="true" focusable="false">
+                <rect x="5.5" y="5.5" width="8" height="8" rx="1.6" fill="none" stroke="currentColor" stroke-width="1.4"/>
+                <path d="M10.5 3.5V3A1.5 1.5 0 0 0 9 1.5H3.5A1.5 1.5 0 0 0 2 3v5.5A1.5 1.5 0 0 0 3.5 10H4" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/>
+              </svg>
+              <span data-copy-label>Adresse kopieren</span>
+            </button>
+          </div>
+          <p class="vh" role="status" aria-live="polite" data-copy-status></p>
+
+          <!-- Bewusste Trennung: persönlicher Kontakt oben direkt, geschäftliche
+               Aufträge unten über die Firma. -->
+          <p class="contact__note">
+            Projektaufträge nehme ich nicht privat an. Anfragen dazu laufen über
+            meinen Arbeitgeber:
+            <a class="textlink" href="mailto:weidlich@ahrcomp.de">weidlich@ahrcomp.de</a>
+          </p>
         </div>
       </div>
     </section>
 
   </main>
 
-  <!-- ==================== 5. Footer ==================== -->
-  <footer class="site-footer" id="kontakt">
+  <!-- ==================== 6. Footer ==================== -->
+  <footer class="site-footer">
     <div class="container site-footer__inner">
-
-      <div class="site-footer__cta reveal">
-        <p class="label"><span class="label__num">04</span>Kontakt</p>
-        <!-- Alternativen, falls eine davon besser klingt:
-             "Ich bin am besten per E-Mail erreichbar."
-             "Für Fragen und Anfragen: einfach eine E-Mail."
-             "Nachrichten erreichen mich per E-Mail." -->
-        <p class="site-footer__lead">
-          Der direkte Weg zu mir ist eine E-Mail.
-        </p>
-
-        <div class="contact-links">
-          <a class="contact-link" href="mailto:philippweidlich@proton.me">
-            <svg class="icon" viewBox="0 0 16 16" aria-hidden="true" focusable="false">
-              <path d="M2 4.5h12v8H2z M2 4.5 8 9l6-4.5" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/>
-            </svg>
-            philippweidlich@proton.me
-          </a>
-        </div>
-
-        <!-- Bewusste Trennung: persönlicher Kontakt oben direkt, geschäftliche
-             Aufträge unten über die Firma. Eine reine Firmenadresse würde
-             Bewerbungs- und Abwerbeanfragen ins Postfach des Arbeitgebers
-             leiten – deshalb bleibt die private Adresse der Hauptweg. -->
-        <p class="site-footer__note">
-          Projektaufträge nehme ich nicht privat an. Anfragen dazu laufen über
-          meinen Arbeitgeber:
-          <a class="textlink" href="mailto:weidlich@ahrcomp.de">weidlich@ahrcomp.de</a>
-        </p>
-      </div>
-
       <div class="site-footer__bottom">
+        <a class="wordmark" href="#top-sentinel">
+          <span class="wordmark__mark" aria-hidden="true">PW</span>
+          <span class="wordmark__name">Philipp&nbsp;Weidlich</span>
+        </a>
         <nav class="site-footer__links" aria-label="Footer-Navigation">
           <a href="https://github.com/philippweidlich" target="_blank" rel="noopener noreferrer">
             GitHub<span class="vh"> (öffnet in neuem Tab)</span>
@@ -498,9 +653,11 @@
           <a href="datenschutz.html">Datenschutz</a>
           <a href="rechtliche-hinweise.html">Rechtliche Hinweise</a>
         </nav>
-        <p class="site-footer__legal">© <span data-year>2026</span> Philipp Weidlich</p>
       </div>
-
+      <div class="site-footer__meta">
+        <p class="site-footer__legal">© <span data-year>2026</span> Philipp Weidlich</p>
+        <p class="site-footer__build mono">statisch gebaut · keine Cookies · kein Tracking</p>
+      </div>
     </div>
   </footer>
 </body>
