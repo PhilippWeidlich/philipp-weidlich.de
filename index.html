@@ -45,9 +45,9 @@
 
   <!-- ---------- Assets ---------- -->
   <link rel="preload" href="assets/fonts/InterVariable.woff2" as="font" type="font/woff2" crossorigin>
-  <link rel="stylesheet" href="css/style.css?v=3">
-  <noscript><link rel="stylesheet" href="css/no-js.css?v=3"></noscript>
-  <script src="js/main.js?v=3" defer></script>
+  <link rel="stylesheet" href="css/style.css?v=4">
+  <noscript><link rel="stylesheet" href="css/no-js.css?v=4"></noscript>
+  <script src="js/main.js?v=4" defer></script>
 
   <!-- Strukturierte Daten: reine Datenauszeichnung, kein ausführbares Skript. -->
   <script type="application/ld+json">
@@ -359,13 +359,126 @@
              Das Raster: AhrComp oben über die volle Breite, darunter drei
              Spalten (Tablet zwei). ref--wide belegt am Desktop zwei Spalten –
              damit gehen 7 Karten auf: [breit][1] / [1][1][1] / [breit][1].
+             Stand 21.10.2026: Physio Plus und Hotel Alex breit.
              Bei anderer Anzahl die breiten Karten neu verteilen.
              Die Zahl im Hero zählt js/main.js. -->
+        <!-- Logo-Laufband: nur Zierde, die Namen stehen in den Karten.
+             Zweite Liste = Kopie fuer die nahtlose Schleife. -->
+        <div class="logo-band reveal" role="region" aria-label="Logos der Referenzen">
+          <div class="logo-band__track">
+            <ul class="logo-band__list" role="list">
+              <li class="logo-band__item logo-band__item--ahrcomp">
+                <a href="https://ahrcomp.de/" target="_blank" rel="noopener noreferrer" aria-label="AhrComp (öffnet in neuem Tab)">
+                  <img class="logo-mono" src="assets/refs/ahrcomp-mono.png" alt="" width="390" height="168" decoding="async" loading="lazy">
+                  <img class="logo-color" src="assets/refs/ahrcomp.png" alt="" width="390" height="168" decoding="async" loading="lazy">
+                </a>
+              </li>
+              <li class="logo-band__item logo-band__item--physio">
+                <a href="https://physio-plus-aw.de/" target="_blank" rel="noopener noreferrer" aria-label="Physio Plus (öffnet in neuem Tab)">
+                  <img class="logo-mono" src="assets/refs/physio-mono.png" alt="" width="386" height="168" decoding="async" loading="lazy">
+                  <img class="logo-color" src="assets/refs/physio.png" alt="" width="386" height="168" decoding="async" loading="lazy">
+                </a>
+              </li>
+              <li class="logo-band__item logo-band__item--floral">
+                <a href="https://floral-design-store.de/" target="_blank" rel="noopener noreferrer" aria-label="Floral Design Store (öffnet in neuem Tab)">
+                  <img class="logo-mono" src="assets/refs/floral-mono.png" alt="" width="904" height="150" decoding="async" loading="lazy">
+                  <img class="logo-color" src="assets/refs/floral.png" alt="" width="904" height="150" decoding="async" loading="lazy">
+                </a>
+              </li>
+              <li class="logo-band__item logo-band__item--simon">
+                <a href="https://simon-baeckerei.de/" target="_blank" rel="noopener noreferrer" aria-label="Bäckerei &amp; Café Simon (öffnet in neuem Tab)">
+                  <img class="logo-mono" src="assets/refs/simon-mono.png" alt="" width="224" height="156" decoding="async" loading="lazy">
+                  <img class="logo-color" src="assets/refs/simon.png" alt="" width="224" height="156" decoding="async" loading="lazy">
+                </a>
+              </li>
+              <li class="logo-band__item logo-band__item--weinhaus">
+                <a href="https://weinhaus-bunte-kuh.de/" target="_blank" rel="noopener noreferrer" aria-label="Weinhaus zur Bunten Kuh (öffnet in neuem Tab)">
+                  <img class="logo-mono" src="assets/refs/weinhaus-mono.png" alt="" width="544" height="170" decoding="async" loading="lazy">
+                  <img class="logo-color" src="assets/refs/weinhaus.png" alt="" width="544" height="170" decoding="async" loading="lazy">
+                </a>
+              </li>
+              <li class="logo-band__item logo-band__item--kanzlei">
+                <a href="https://kanzlei-marquenie.de/" target="_blank" rel="noopener noreferrer" aria-label="Kanzlei Marquenie (öffnet in neuem Tab)">
+                  <img class="logo-mono" src="assets/refs/kanzlei-mono.png" alt="" width="804" height="150" decoding="async" loading="lazy">
+                  <img class="logo-color" src="assets/refs/kanzlei.png" alt="" width="804" height="150" decoding="async" loading="lazy">
+                </a>
+              </li>
+              <li class="logo-band__item logo-band__item--hotel">
+                <a href="https://hotel-alex-ahr.de/" target="_blank" rel="noopener noreferrer" aria-label="Hotel Alex an der Ahr (öffnet in neuem Tab)">
+                  <img class="logo-mono" src="assets/refs/hotel-mono.png" alt="" width="244" height="104" decoding="async" loading="lazy">
+                  <img class="logo-color" src="assets/refs/hotel.png" alt="" width="244" height="104" decoding="async" loading="lazy">
+                </a>
+              </li>
+              <li class="logo-band__item logo-band__item--schaefer">
+                <a href="https://schaefer-steuerberater.com/" target="_blank" rel="noopener noreferrer" aria-label="Steuerberater Schäfer (öffnet in neuem Tab)">
+                  <img class="logo-mono" src="assets/refs/schaefer-mono.png" alt="" width="717" height="156" decoding="async" loading="lazy">
+                  <img class="logo-color" src="assets/refs/schaefer.png" alt="" width="717" height="156" decoding="async" loading="lazy">
+                </a>
+              </li>
+            </ul>
+            <ul class="logo-band__list" role="list" aria-hidden="true">
+              <li class="logo-band__item logo-band__item--ahrcomp">
+                <a href="https://ahrcomp.de/" target="_blank" rel="noopener noreferrer" tabindex="-1" aria-label="AhrComp (öffnet in neuem Tab)">
+                  <img class="logo-mono" src="assets/refs/ahrcomp-mono.png" alt="" width="390" height="168" decoding="async" loading="lazy">
+                  <img class="logo-color" src="assets/refs/ahrcomp.png" alt="" width="390" height="168" decoding="async" loading="lazy">
+                </a>
+              </li>
+              <li class="logo-band__item logo-band__item--physio">
+                <a href="https://physio-plus-aw.de/" target="_blank" rel="noopener noreferrer" tabindex="-1" aria-label="Physio Plus (öffnet in neuem Tab)">
+                  <img class="logo-mono" src="assets/refs/physio-mono.png" alt="" width="386" height="168" decoding="async" loading="lazy">
+                  <img class="logo-color" src="assets/refs/physio.png" alt="" width="386" height="168" decoding="async" loading="lazy">
+                </a>
+              </li>
+              <li class="logo-band__item logo-band__item--floral">
+                <a href="https://floral-design-store.de/" target="_blank" rel="noopener noreferrer" tabindex="-1" aria-label="Floral Design Store (öffnet in neuem Tab)">
+                  <img class="logo-mono" src="assets/refs/floral-mono.png" alt="" width="904" height="150" decoding="async" loading="lazy">
+                  <img class="logo-color" src="assets/refs/floral.png" alt="" width="904" height="150" decoding="async" loading="lazy">
+                </a>
+              </li>
+              <li class="logo-band__item logo-band__item--simon">
+                <a href="https://simon-baeckerei.de/" target="_blank" rel="noopener noreferrer" tabindex="-1" aria-label="Bäckerei &amp; Café Simon (öffnet in neuem Tab)">
+                  <img class="logo-mono" src="assets/refs/simon-mono.png" alt="" width="224" height="156" decoding="async" loading="lazy">
+                  <img class="logo-color" src="assets/refs/simon.png" alt="" width="224" height="156" decoding="async" loading="lazy">
+                </a>
+              </li>
+              <li class="logo-band__item logo-band__item--weinhaus">
+                <a href="https://weinhaus-bunte-kuh.de/" target="_blank" rel="noopener noreferrer" tabindex="-1" aria-label="Weinhaus zur Bunten Kuh (öffnet in neuem Tab)">
+                  <img class="logo-mono" src="assets/refs/weinhaus-mono.png" alt="" width="544" height="170" decoding="async" loading="lazy">
+                  <img class="logo-color" src="assets/refs/weinhaus.png" alt="" width="544" height="170" decoding="async" loading="lazy">
+                </a>
+              </li>
+              <li class="logo-band__item logo-band__item--kanzlei">
+                <a href="https://kanzlei-marquenie.de/" target="_blank" rel="noopener noreferrer" tabindex="-1" aria-label="Kanzlei Marquenie (öffnet in neuem Tab)">
+                  <img class="logo-mono" src="assets/refs/kanzlei-mono.png" alt="" width="804" height="150" decoding="async" loading="lazy">
+                  <img class="logo-color" src="assets/refs/kanzlei.png" alt="" width="804" height="150" decoding="async" loading="lazy">
+                </a>
+              </li>
+              <li class="logo-band__item logo-band__item--hotel">
+                <a href="https://hotel-alex-ahr.de/" target="_blank" rel="noopener noreferrer" tabindex="-1" aria-label="Hotel Alex an der Ahr (öffnet in neuem Tab)">
+                  <img class="logo-mono" src="assets/refs/hotel-mono.png" alt="" width="244" height="104" decoding="async" loading="lazy">
+                  <img class="logo-color" src="assets/refs/hotel.png" alt="" width="244" height="104" decoding="async" loading="lazy">
+                </a>
+              </li>
+              <li class="logo-band__item logo-band__item--schaefer">
+                <a href="https://schaefer-steuerberater.com/" target="_blank" rel="noopener noreferrer" tabindex="-1" aria-label="Steuerberater Schäfer (öffnet in neuem Tab)">
+                  <img class="logo-mono" src="assets/refs/schaefer-mono.png" alt="" width="717" height="156" decoding="async" loading="lazy">
+                  <img class="logo-color" src="assets/refs/schaefer.png" alt="" width="717" height="156" decoding="async" loading="lazy">
+                </a>
+              </li>
+            </ul>
+          </div>
+        </div>
+
         <ul class="refs stagger" role="list">
 
           <!-- Hervorgehoben: aktueller Arbeitsplatz -->
-          <li class="ref ref--featured spot reveal">
+          <li class="ref ref--ahrcomp ref--featured spot reveal">
             <div class="ref__main">
+              <!-- Logo des Auftraggebers: weiss, beim Hover in Originalfarben -->
+              <div class="ref__logo ref__logo--compact" aria-hidden="true">
+                <img class="logo-mono" src="assets/refs/ahrcomp-mono.png" alt="" width="390" height="168" decoding="async" loading="lazy">
+                <img class="logo-color" src="assets/refs/ahrcomp.png" alt="" width="390" height="168" decoding="async" loading="lazy">
+              </div>
               <div class="ref__top">
                 <span class="ref__idx">01</span>
                 <span class="badge"><span class="chip__dot" aria-hidden="true"></span>Aktueller Arbeitsplatz</span>
@@ -393,7 +506,10 @@
                 <span class="window__url"><svg viewBox="0 0 16 16" focusable="false"><rect x="3.5" y="7" width="9" height="6.5" rx="1.2"/><path d="M5.5 7V5.2a2.5 2.5 0 0 1 5 0V7"/></svg>ahrcomp.de</span>
               </div>
               <div class="window__body">
-                <span class="sk sk--nav"></span>
+                <span class="window__logo">
+                  <img class="logo-mono" src="assets/refs/ahrcomp-mono.png" alt="" width="390" height="168" decoding="async" loading="lazy">
+                  <img class="logo-color" src="assets/refs/ahrcomp.png" alt="" width="390" height="168" decoding="async" loading="lazy">
+                </span>
                 <span class="sk sk--h1"></span>
                 <span class="sk sk--line"></span>
                 <span class="sk sk--line sk--short"></span>
@@ -403,30 +519,14 @@
             </div>
           </li>
 
-          <li class="ref ref--wide spot reveal">
+          <li class="ref ref--physio ref--wide spot reveal">
+            <!-- Logo des Auftraggebers: weiss, beim Hover in Originalfarben -->
+            <div class="ref__logo" aria-hidden="true">
+              <img class="logo-mono" src="assets/refs/physio-mono.png" alt="" width="386" height="168" decoding="async" loading="lazy">
+              <img class="logo-color" src="assets/refs/physio.png" alt="" width="386" height="168" decoding="async" loading="lazy">
+            </div>
             <div class="ref__top">
               <span class="ref__idx">02</span>
-              <span class="ref__role">Gestaltung &amp; Umsetzung</span>
-            </div>
-            <h3 class="ref__title">
-              <a href="https://floral-design-store.de/" target="_blank" rel="noopener noreferrer">
-                Floral Design Store<span class="vh"> (öffnet in neuem Tab)</span>
-              </a>
-            </h3>
-            <p class="ref__text">
-              Auftritt eines Floristen in Bad Neuenahr: Hochzeits- und
-              Trauerfloristik, Events, Innenbegrünung und Workshops, dazu eine
-              Galerie, Aktionen und ein direkter Weg zur Anfrage.
-            </p>
-            <div class="ref__foot">
-              <ul class="tags" role="list"><li>HTML</li><li>CSS</li><li>JavaScript</li><li>Responsiv</li></ul>
-              <span class="ref__url" aria-hidden="true">floral-design-store.de<svg viewBox="0 0 16 16" focusable="false"><path d="M6 3h7v7M13 3 3.5 12.5"/></svg></span>
-            </div>
-          </li>
-
-          <li class="ref spot reveal">
-            <div class="ref__top">
-              <span class="ref__idx">03</span>
               <span class="ref__role">Gestaltung &amp; Umsetzung</span>
             </div>
             <h3 class="ref__title">
@@ -445,7 +545,38 @@
             </div>
           </li>
 
-          <li class="ref spot reveal">
+          <li class="ref ref--floral spot reveal">
+            <!-- Logo des Auftraggebers: weiss, beim Hover in Originalfarben -->
+            <div class="ref__logo" aria-hidden="true">
+              <img class="logo-mono" src="assets/refs/floral-mono.png" alt="" width="904" height="150" decoding="async" loading="lazy">
+              <img class="logo-color" src="assets/refs/floral.png" alt="" width="904" height="150" decoding="async" loading="lazy">
+            </div>
+            <div class="ref__top">
+              <span class="ref__idx">03</span>
+              <span class="ref__role">Gestaltung &amp; Umsetzung</span>
+            </div>
+            <h3 class="ref__title">
+              <a href="https://floral-design-store.de/" target="_blank" rel="noopener noreferrer">
+                Floral Design Store<span class="vh"> (öffnet in neuem Tab)</span>
+              </a>
+            </h3>
+            <p class="ref__text">
+              Auftritt eines Floristen in Bad Neuenahr: Hochzeits- und
+              Trauerfloristik, Events, Innenbegrünung und Workshops, dazu eine
+              Galerie, Aktionen und ein direkter Weg zur Anfrage.
+            </p>
+            <div class="ref__foot">
+              <ul class="tags" role="list"><li>HTML</li><li>CSS</li><li>JavaScript</li><li>Responsiv</li></ul>
+              <span class="ref__url" aria-hidden="true">floral-design-store.de<svg viewBox="0 0 16 16" focusable="false"><path d="M6 3h7v7M13 3 3.5 12.5"/></svg></span>
+            </div>
+          </li>
+
+          <li class="ref ref--simon spot reveal">
+            <!-- Logo des Auftraggebers: weiss, beim Hover in Originalfarben -->
+            <div class="ref__logo" aria-hidden="true">
+              <img class="logo-mono" src="assets/refs/simon-mono.png" alt="" width="224" height="156" decoding="async" loading="lazy">
+              <img class="logo-color" src="assets/refs/simon.png" alt="" width="224" height="156" decoding="async" loading="lazy">
+            </div>
             <div class="ref__top">
               <span class="ref__idx">04</span>
               <span class="ref__role">Gestaltung &amp; Umsetzung</span>
@@ -466,7 +597,12 @@
             </div>
           </li>
 
-          <li class="ref spot reveal">
+          <li class="ref ref--weinhaus spot reveal">
+            <!-- Logo des Auftraggebers: weiss, beim Hover in Originalfarben -->
+            <div class="ref__logo" aria-hidden="true">
+              <img class="logo-mono" src="assets/refs/weinhaus-mono.png" alt="" width="544" height="170" decoding="async" loading="lazy">
+              <img class="logo-color" src="assets/refs/weinhaus.png" alt="" width="544" height="170" decoding="async" loading="lazy">
+            </div>
             <div class="ref__top">
               <span class="ref__idx">05</span>
               <span class="ref__role">Gestaltung &amp; Umsetzung</span>
@@ -486,7 +622,12 @@
             </div>
           </li>
 
-          <li class="ref spot reveal">
+          <li class="ref ref--kanzlei spot reveal">
+            <!-- Logo des Auftraggebers: weiss, beim Hover in Originalfarben -->
+            <div class="ref__logo" aria-hidden="true">
+              <img class="logo-mono" src="assets/refs/kanzlei-mono.png" alt="" width="804" height="150" decoding="async" loading="lazy">
+              <img class="logo-color" src="assets/refs/kanzlei.png" alt="" width="804" height="150" decoding="async" loading="lazy">
+            </div>
             <div class="ref__top">
               <span class="ref__idx">06</span>
               <span class="ref__role">Gestaltung &amp; Umsetzung</span>
@@ -506,9 +647,41 @@
             </div>
           </li>
 
-          <li class="ref ref--wide spot reveal">
+          <li class="ref ref--hotel ref--wide spot reveal">
+            <!-- Logo des Auftraggebers: weiss, beim Hover in Originalfarben -->
+            <div class="ref__logo" aria-hidden="true">
+              <img class="logo-mono" src="assets/refs/hotel-mono.png" alt="" width="244" height="104" decoding="async" loading="lazy">
+              <img class="logo-color" src="assets/refs/hotel.png" alt="" width="244" height="104" decoding="async" loading="lazy">
+            </div>
+            <!-- Bewusst zurückhaltender formuliert: hier Mitarbeit, keine
+                 vollständige Umsetzung. -->
             <div class="ref__top">
               <span class="ref__idx">07</span>
+              <span class="ref__role ref__role--muted">Mitgearbeitet</span>
+            </div>
+            <h3 class="ref__title">
+              <a href="https://hotel-alex-ahr.de/" target="_blank" rel="noopener noreferrer">
+                Hotel Alex an der Ahr<span class="vh"> (öffnet in neuem Tab)</span>
+              </a>
+            </h3>
+            <p class="ref__text">
+              Vier-Sterne-Hotel in Bad Neuenahr: Zimmer und Suiten, Tagungen,
+              Bar und Freizeitangebote. Mitarbeit am Webauftritt.
+            </p>
+            <div class="ref__foot">
+              <ul class="tags" role="list"><li>HTML</li><li>CSS</li><li>Responsiv</li></ul>
+              <span class="ref__url" aria-hidden="true">hotel-alex-ahr.de<svg viewBox="0 0 16 16" focusable="false"><path d="M6 3h7v7M13 3 3.5 12.5"/></svg></span>
+            </div>
+          </li>
+
+          <li class="ref ref--schaefer spot reveal">
+            <!-- Logo des Auftraggebers: weiss, beim Hover in Originalfarben -->
+            <div class="ref__logo" aria-hidden="true">
+              <img class="logo-mono" src="assets/refs/schaefer-mono.png" alt="" width="717" height="156" decoding="async" loading="lazy">
+              <img class="logo-color" src="assets/refs/schaefer.png" alt="" width="717" height="156" decoding="async" loading="lazy">
+            </div>
+            <div class="ref__top">
+              <span class="ref__idx">08</span>
               <span class="ref__role">Gestaltung &amp; Umsetzung</span>
             </div>
             <h3 class="ref__title">
@@ -524,28 +697,6 @@
             <div class="ref__foot">
               <ul class="tags" role="list"><li>HTML</li><li>CSS</li><li>Responsiv</li></ul>
               <span class="ref__url" aria-hidden="true">schaefer-steuerberater.com<svg viewBox="0 0 16 16" focusable="false"><path d="M6 3h7v7M13 3 3.5 12.5"/></svg></span>
-            </div>
-          </li>
-
-          <li class="ref spot reveal">
-            <!-- Bewusst zurückhaltender formuliert: hier Mitarbeit, keine
-                 vollständige Umsetzung. -->
-            <div class="ref__top">
-              <span class="ref__idx">08</span>
-              <span class="ref__role ref__role--muted">Mitgearbeitet</span>
-            </div>
-            <h3 class="ref__title">
-              <a href="https://hotel-alex-ahr.de/" target="_blank" rel="noopener noreferrer">
-                Hotel Alex an der Ahr<span class="vh"> (öffnet in neuem Tab)</span>
-              </a>
-            </h3>
-            <p class="ref__text">
-              Vier-Sterne-Hotel in Bad Neuenahr: Zimmer und Suiten, Tagungen,
-              Bar und Freizeitangebote. Mitarbeit am Webauftritt.
-            </p>
-            <div class="ref__foot">
-              <ul class="tags" role="list"><li>HTML</li><li>CSS</li><li>Responsiv</li></ul>
-              <span class="ref__url" aria-hidden="true">hotel-alex-ahr.de<svg viewBox="0 0 16 16" focusable="false"><path d="M6 3h7v7M13 3 3.5 12.5"/></svg></span>
             </div>
           </li>
 

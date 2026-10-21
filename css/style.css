@@ -9,7 +9,7 @@
 
    Aufbau: 1 Schrift · 2 Tokens · 3 Basis · 4 Hintergrund · 5 Raster
            6 Kopfzeile · 7 Bausteine · 8 Hero · 9 Sektionen
-           10 Referenzen · 11 Projekt · 12 Kontakt · 13 Footer
+           10 Referenzen (10.2 Logos) · 11 Projekt · 12 Kontakt · 13 Footer
            14 Textseiten · 15 Bewegung · 16 A11y/Druck
    ============================================================ */
 
@@ -1354,6 +1354,173 @@ a {
   }
 }
 @keyframes shimmer { 60%, 100% { transform: translateX(100%); } }
+
+
+/* 10.2 Logos der Auftraggeber
+   Ruhe: weiße Silhouette – die Seite bleibt einfarbig. Hover/Fokus:
+   Originalfarben blenden über, dahinter leuchtet die Markenfarbe
+   (--brand, je Karte) als Licht. Geräte ohne Hover zeigen gleich Farbe.
+   Dateien: assets/refs/<name>.png und <name>-mono.png */
+.ref--ahrcomp  { --brand: 196, 30, 36; }
+.ref--floral   { --brand: 192, 173, 146; }
+.ref--physio   { --brand: 178, 204, 70; }
+.ref--simon    { --brand: 243, 173, 43; }
+.ref--weinhaus { --brand: 217, 162, 74; }
+.ref--kanzlei  { --brand: 177, 135, 63; }
+.ref--schaefer { --brand: 46, 125, 104; }
+.ref--hotel    { --brand: 207, 175, 123; }
+
+.logo-mono,
+.logo-color {
+  grid-area: 1 / 1;
+  width: auto;
+  height: auto;
+  transition: opacity var(--dur) var(--ease),
+              transform 0.5s var(--ease-out);
+}
+.logo-mono  { opacity: 0.62; }
+.logo-color { opacity: 0; transform: scale(0.94); }
+
+/* Bühne in der Karte */
+.ref__logo {
+  position: relative;
+  display: grid;
+  place-items: center;
+  overflow: hidden;
+  height: 6.5rem;
+  margin-bottom: 0.35rem;
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.03), rgba(255, 255, 255, 0.008));
+  transition: border-color var(--dur) var(--ease);
+}
+/* Punktraster als Bühnenboden, zum Rand hin ausgeblendet */
+.ref__logo::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(rgba(255, 255, 255, 0.08) 1px, transparent 1.3px) 0 0 / 14px 14px;
+  -webkit-mask-image: radial-gradient(ellipse 65% 75% at 50% 50%, #000, transparent);
+  mask-image: radial-gradient(ellipse 65% 75% at 50% 50%, #000, transparent);
+}
+/* Licht in der Markenfarbe */
+.ref__logo::after {
+  content: "";
+  position: absolute;
+  inset: -40% -10%;
+  background: radial-gradient(closest-side, rgba(var(--brand), 0.32), transparent 80%);
+  opacity: 0;
+  transform: scale(0.75);
+  transition: opacity var(--dur) var(--ease), transform 0.6s var(--ease-out);
+}
+.ref__logo img {
+  position: relative;
+  z-index: 1;
+  max-width: 78%;
+  max-height: 3.4rem;
+}
+/* Fast quadratische Logos wirken sonst zu klein */
+.ref--simon .ref__logo img { max-height: 4.4rem; }
+.ref--hotel .ref__logo img { max-height: 4.6rem; }
+
+.ref:hover .ref__logo,
+.ref:focus-within .ref__logo { border-color: rgba(var(--brand), 0.4); }
+.ref:hover .ref__logo::after,
+.ref:focus-within .ref__logo::after { opacity: 1; transform: scale(1); }
+.ref:hover .logo-mono,
+.ref:focus-within .logo-mono { opacity: 0; transform: scale(1.04); }
+.ref:hover .logo-color,
+.ref:focus-within .logo-color { opacity: 1; transform: scale(1); }
+
+/* AhrComp: Logo sitzt im angedeuteten Browserfenster. Die Bühne
+   gibt es dort nur, solange das Fenster ausgeblendet ist. */
+.window__logo {
+  display: grid;
+  justify-items: start;
+  margin-bottom: 0.7rem;
+}
+.window__logo img { max-height: 2.75rem; }
+@media (min-width: 52rem) {
+  .ref__logo--compact { display: none; }
+}
+
+/* Breite Karten: Bühne rechts über die volle Höhe */
+@media (min-width: 64rem) {
+  .ref--wide {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 0.85fr);
+    grid-template-rows: auto auto auto 1fr;
+    column-gap: 1.75rem;
+    row-gap: 0.85rem;
+  }
+  .ref--wide > * { grid-column: 1; }
+  .ref--wide > .ref__logo {
+    grid-column: 2;
+    grid-row: 1 / -1;
+    height: auto;
+    min-height: 9rem;
+    margin: 0;
+  }
+  .ref--wide .ref__logo img { max-height: 4rem; }
+  .ref--wide .ref__foot { align-self: end; }
+}
+
+/* Logo-Laufband über den Karten – jedes Logo verlinkt die Seite */
+.logo-band {
+  position: relative;
+  overflow: hidden;
+  margin-bottom: clamp(1.75rem, 4vw, 2.75rem);
+  padding-block: 0.9rem;
+  border-block: 1px solid var(--line);
+  background: rgba(255, 255, 255, 0.012);
+  -webkit-mask-image: linear-gradient(90deg, transparent, #000 10%, #000 90%, transparent);
+  mask-image: linear-gradient(90deg, transparent, #000 10%, #000 90%, transparent);
+}
+.logo-band__track {
+  display: flex;
+  width: max-content;
+}
+.logo-band__list {
+  display: flex;
+  flex: none;
+  align-items: center;
+}
+.logo-band__item a {
+  display: grid;
+  place-items: center;
+  height: 3.75rem;
+  margin-inline: clamp(0.5rem, 1vw, 1rem);
+  padding-inline: clamp(1rem, 2vw, 1.75rem);
+  border-radius: var(--radius-sm);
+}
+.logo-band__item a:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: -2px;
+}
+.logo-band__item img {
+  max-width: 11rem;
+  max-height: 2.4rem;
+}
+.logo-band__item--simon img,
+.logo-band__item--hotel img { max-height: 3.2rem; }
+.logo-band__item .logo-mono { opacity: 0.5; }
+.logo-band__item a:hover .logo-mono,
+.logo-band__item a:focus-visible .logo-mono { opacity: 0; }
+.logo-band__item a:hover .logo-color,
+.logo-band__item a:focus-visible .logo-color { opacity: 1; transform: scale(1.04); }
+@media (prefers-reduced-motion: no-preference) {
+  .logo-band__track { animation: marquee 42s linear infinite; }
+  .logo-band:hover .logo-band__track,
+  .logo-band:focus-within .logo-band__track { animation-play-state: paused; }
+}
+
+/* Touch: kein Hover – Farbe gleich zeigen */
+@media (hover: none) {
+  .logo-mono,
+  .logo-band__item .logo-mono { opacity: 0; }
+  .logo-color { opacity: 1; transform: none; }
+  .ref__logo::after { opacity: 0.6; transform: none; }
+}
 
 
 /* --- 11 Eigenes Projekt ------------------------------------- */
