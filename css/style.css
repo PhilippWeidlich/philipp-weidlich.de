@@ -9,7 +9,7 @@
 
    Aufbau: 1 Schrift · 2 Tokens · 3 Basis · 4 Hintergrund · 5 Raster
            6 Kopfzeile · 7 Bausteine · 8 Hero · 9 Sektionen
-           10 Referenzen (10.2 Logos) · 11 Projekt · 12 Kontakt · 13 Footer
+           10 Referenzen (10.2 Logos, 10.3 AhrComp im Fenster) · 11 Projekt · 12 Kontakt · 13 Footer
            14 Textseiten · 15 Bewegung · 16 A11y/Druck
    ============================================================ */
 
@@ -1313,47 +1313,6 @@ a {
   stroke: var(--ok);
   stroke-width: 1.5;
 }
-.window__body {
-  display: grid;
-  gap: 0.6rem;
-  padding: 1.15rem 1.15rem 1.3rem;
-}
-.sk {
-  position: relative;
-  display: block;
-  overflow: hidden;
-  height: 0.55rem;
-  border-radius: 5px;
-  background: rgba(255, 255, 255, 0.065);
-}
-.sk--nav  { width: 38%; height: 0.5rem; margin-bottom: 0.6rem; background: rgba(255, 255, 255, 0.05); }
-.sk--h1   { width: 72%; height: 1.25rem; background: linear-gradient(90deg, rgba(255, 255, 255, 0.18), rgba(255, 255, 255, 0.07)); }
-.sk--line { width: 92%; }
-.sk--short { width: 58%; }
-.sk--btn  { width: 6.5rem; height: 1.6rem; margin-top: 0.35rem; border-radius: 999px; background: var(--grad); opacity: 0.8; }
-.sk-grid {
-  display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: 0.5rem;
-  margin-top: 0.7rem;
-}
-.sk-grid span {
-  height: 3.75rem;
-  border: 1px solid var(--line);
-  border-radius: 8px;
-  background: rgba(255, 255, 255, 0.035);
-}
-@media (prefers-reduced-motion: no-preference) {
-  .sk:not(.sk--btn)::after {
-    content: "";
-    position: absolute;
-    inset: 0;
-    transform: translateX(-100%);
-    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.09), transparent);
-    animation: shimmer 3.2s var(--ease) infinite;
-  }
-}
-@keyframes shimmer { 60%, 100% { transform: translateX(100%); } }
 
 
 /* 10.2 Logos der Auftraggeber
@@ -1422,6 +1381,8 @@ a {
 /* Fast quadratische Logos wirken sonst zu klein */
 .ref--simon .ref__logo img { max-height: 4.4rem; }
 .ref--hotel .ref__logo img { max-height: 4.6rem; }
+/* Wortmarke ohne Bildzeichen – schwer und breit, darum kleiner */
+.ref--ahrcomp .ref__logo img { max-height: 2.4rem; max-width: 62%; }
 
 .ref:hover .ref__logo,
 .ref:focus-within .ref__logo { border-color: rgba(var(--brand), 0.4); }
@@ -1432,14 +1393,8 @@ a {
 .ref:hover .logo-color,
 .ref:focus-within .logo-color { opacity: 1; transform: scale(1); }
 
-/* AhrComp: Logo sitzt im angedeuteten Browserfenster. Die Bühne
-   gibt es dort nur, solange das Fenster ausgeblendet ist. */
-.window__logo {
-  display: grid;
-  justify-items: start;
-  margin-bottom: 0.7rem;
-}
-.window__logo img { max-height: 2.75rem; }
+/* AhrComp: die Seite steht im Kleinformat im Browserfenster (10.3).
+   Die Bühne gibt es dort nur, solange das Fenster ausgeblendet ist. */
 @media (min-width: 52rem) {
   .ref__logo--compact { display: none; }
 }
@@ -1503,6 +1458,7 @@ a {
 }
 .logo-band__item--simon img,
 .logo-band__item--hotel img { max-height: 3.2rem; }
+.logo-band__item--ahrcomp img { max-height: 1.55rem; }
 .logo-band__item .logo-mono { opacity: 0.5; }
 .logo-band__item a:hover .logo-mono,
 .logo-band__item a:focus-visible .logo-mono { opacity: 0; }
@@ -1520,6 +1476,49 @@ a {
   .logo-band__item .logo-mono { opacity: 0; }
   .logo-color { opacity: 1; transform: none; }
   .ref__logo::after { opacity: 0.6; transform: none; }
+}
+
+
+/* 10.3 AhrComp im Kleinformat (im Browserfenster der ersten Karte)
+   Erster Bildschirm von ahrcomp.de, Regeln in css/ahrcomp-mini.css – dort
+   ist jedes Maß in --u angegeben: 1 Pixel der Originalseite bei 1440 px
+   Breite. Das Fenster zeigt also genau den Ausschnitt 1440 × 900.
+   Feste Vorschau ohne Scrollen; live ist der Öffnungsstatus.
+   Ruhe grau, abgedunkelt und still wie die weißen Logos; Hover/Fokus:
+   Originalfarben, das Herstellerband läuft. */
+.window__screen {
+  --u: calc(100cqw / 1440);
+  container-type: inline-size;
+  position: relative;
+  overflow: hidden;
+  aspect-ratio: 1440 / 900;
+  background: #f1eee7;
+}
+/* Leichter Glasreflex über dem "Bildschirm" */
+.window__screen::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(160deg, rgba(255, 255, 255, 0.06), transparent 40%);
+  pointer-events: none;
+}
+.window__screen .mini {
+  filter: grayscale(1) brightness(0.4) contrast(1.1);
+  transition: filter 0.6s var(--ease);
+}
+.ref:hover .window__screen .mini,
+.ref:focus-within .window__screen .mini { filter: none; }
+/* Herstellerband steht in Ruhe still und läuft nur beim Hover/Fokus
+   (drei Klassen tief, weil ahrcomp-mini.css die animation-Kurzform setzt) */
+.window__screen .mini .ac-marquee__track { animation-play-state: paused; }
+.ref:hover .window__screen .mini .ac-marquee__track,
+.ref:focus-within .window__screen .mini .ac-marquee__track { animation-play-state: running; }
+@media (hover: none) {
+  .window__screen .mini { filter: none; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .window__screen .ac-marquee__track,
+  .window__screen .ac-dot { animation: none; }
 }
 
 

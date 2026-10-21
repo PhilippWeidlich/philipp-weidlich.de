@@ -255,4 +255,65 @@
 
   var yearEl = document.querySelector("[data-year]");
   if (yearEl) yearEl.textContent = String(new Date().getFullYear());
+
+  /* --- 9 AhrComp im Browserfenster: Live-Status -------------- */
+  /* Gleiche Regeln wie auf ahrcomp.de: Mo–Fr 9:00–17:30, Feiertage in
+     Rheinland-Pfalz plus Heiligabend und Silvester geschlossen.
+     Klassen tragen im Fenster das Präfix ac- (css/ahrcomp-mini.css). */
+  var ahrSys = document.querySelector("[data-ahr-sys]");
+  if (ahrSys) {
+    var TAGE = ["Sonntag", "Montag", "Dienstag", "Mittwoch", "Donnerstag", "Freitag", "Samstag"];
+    var AUF = 540, ZU = 1050;
+    var hhmm = function (m) {
+      var h = Math.floor(m / 60), mm = m % 60;
+      return (h < 10 ? "0" + h : h) + ":" + (mm < 10 ? "0" + mm : mm);
+    };
+    var tagKey = function (d) { return d.getMonth() + "-" + d.getDate(); };
+    var feiertag = function (d) {
+      var j = d.getFullYear();
+      var a = j % 19, b = Math.floor(j / 100), c = j % 100, e = b % 4;
+      var g = Math.floor((b - Math.floor((b + 8) / 25) + 1) / 3);
+      var h = (19 * a + b - Math.floor(b / 4) - g + 15) % 30;
+      var l = (32 + 2 * e + 2 * Math.floor(c / 4) - h - c % 4) % 7;
+      var t = h + l - 7 * Math.floor((a + 11 * h + 22 * l) / 451) + 114;
+      var ostern = new Date(j, Math.floor(t / 31) - 1, (t % 31) + 1);
+      var liste = ["0-1", "4-1", "9-3", "10-1", "11-24", "11-25", "11-26", "11-31"];
+      [-2, 1, 39, 50, 60].forEach(function (o) {
+        liste.push(tagKey(new Date(j, ostern.getMonth(), ostern.getDate() + o)));
+      });
+      return liste.indexOf(tagKey(d)) !== -1;
+    };
+    var offen = function (d) { return d.getDay() >= 1 && d.getDay() <= 5 && !feiertag(d); };
+    var ahrStatus = function (now) {
+      var cur = now.getHours() * 60 + now.getMinutes();
+      if (offen(now) && cur >= AUF && cur < ZU) return { open: true, close: hhmm(ZU) };
+      for (var i = 0; i < 21; i++) {
+        var tag = new Date(now.getFullYear(), now.getMonth(), now.getDate() + i);
+        if (!offen(tag) || (i === 0 && cur >= AUF)) continue;
+        var wann = i === 0 ? "heute" : i === 1 ? "morgen" : i < 7 ? TAGE[tag.getDay()] :
+          TAGE[tag.getDay()] + ", " + tag.getDate() + "." + (tag.getMonth() + 1) + ".";
+        return { open: false, next: "öffnet " + wann + " um " + hhmm(AUF) + " Uhr" };
+      }
+      return { open: false, next: "" };
+    };
+    var setText = function (sel, txt) {
+      var el = document.querySelector(sel);
+      if (el) el.textContent = txt;
+    };
+    var setClass = function (sel, cls) {
+      var el = document.querySelector(sel);
+      if (el) el.className = cls;
+    };
+    var ahrApply = function () {
+      var s = ahrStatus(new Date());
+      setClass("[data-ahr-sysdot]", "ac-dot " + (s.open ? "ac-is-open" : "ac-is-closed"));
+      setText("[data-ahr-sys]", s.open ? "Jetzt geöffnet · schließt " + s.close + " Uhr" : "Geschlossen · " + s.next);
+      setClass("[data-ahr-deskdot]", "ac-dot" + (s.open ? "" : " ac-is-closed"));
+      setText("[data-ahr-state]", s.open ? "Geöffnet" : "Geschlossen");
+      setText("[data-ahr-hours]", s.open ? "schließt heute um " + s.close + " Uhr" :
+        s.next.charAt(0).toUpperCase() + s.next.slice(1));
+    };
+    ahrApply();
+    setInterval(ahrApply, 60000);
+  }
 })();
