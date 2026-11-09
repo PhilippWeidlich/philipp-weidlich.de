@@ -31,6 +31,16 @@
   descent-override: 24.1%;
   line-gap-override: 0%;
 }
+/* Feste Monospace-Schrift (IBM Plex Mono 500, OFL) – dieselbe Datei wie in
+   der AhrComp-Vorschau. Damit sehen Terminal, Labels und Tags auf jedem
+   System gleich aus; fehlt ein Zeichen, greift die System-Schrift. */
+@font-face {
+  font-family: "Site Mono";
+  src: url("../assets/fonts/ahrcomp/plex-mono-500.woff2") format("woff2");
+  font-weight: 400 600;
+  font-style: normal;
+  font-display: swap;
+}
 
 
 /* --- 2 Design-Tokens ----------------------------------------- */
@@ -65,7 +75,7 @@
   /* Schrift */
   --font-sans: "Site Sans", "Site Sans Fallback", ui-sans-serif, system-ui,
                -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-  --font-mono: ui-monospace, "Cascadia Code", "SF Mono", "JetBrains Mono",
+  --font-mono: "Site Mono", ui-monospace, "Cascadia Code", "SF Mono", "JetBrains Mono",
                Menlo, Consolas, "Liberation Mono", monospace;
 
   --fs-xs:   0.75rem;
@@ -1140,14 +1150,19 @@ a {
   transition: transform var(--dur) var(--ease),
               border-color var(--dur) var(--ease);
 }
-/* Verlaufskante beim Hover – per Maske nur der 1px-Rand sichtbar */
-.ref::before {
+/* Lichtkante beim Hover – per Maske nur der 1px-Rand sichtbar. Das Licht
+   folgt dem Mauszeiger (--mx/--my setzt js/main.js), darunter liegt ein
+   schwacher Verlauf, damit die Kante auch per Tastatur-Fokus zu sehen ist. */
+.ref::before,
+.tile::before {
   content: "";
   position: absolute;
   inset: -1px;
   padding: 1px;
   border-radius: inherit;
-  background: var(--grad-edge);
+  background:
+    radial-gradient(20rem circle at var(--mx, 50%) var(--my, 0%), rgba(125, 211, 252, 0.95), rgba(94, 234, 212, 0.35) 38%, transparent 68%),
+    linear-gradient(135deg, rgba(94, 234, 212, 0.4), rgba(125, 211, 252, 0.12) 45%, rgba(165, 180, 252, 0.4));
   -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
   -webkit-mask-composite: xor;
   mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
@@ -1156,7 +1171,11 @@ a {
   pointer-events: none;
   transition: opacity var(--dur) var(--ease);
 }
-.ref:hover::before, .ref:focus-within::before { opacity: 1; }
+.ref:hover::before, .ref:focus-within::before, .tile:hover::before { opacity: 1; }
+/* Die Kachel schneidet ihren Inhalt ab (Topologie) – die Lichtkante liegt
+   deshalb innen und ersetzt beim Hover die Haarlinie. */
+.tile::before { inset: 0; }
+.tile:hover { border-color: transparent; }
 @media (prefers-reduced-motion: no-preference) {
   .ref:hover { transform: translateY(-4px); }
 }
@@ -2011,12 +2030,15 @@ a {
   .btn, .chip, .badge, .ref, .tile, .spec, .project, .contact, .term {
     border: 1px solid CanvasText;
   }
-  .backdrop, .progress { display: none; }
+  .backdrop, .progress, .hero__net, .site-footer__giant, .contact__beam { display: none; }
+  .cmdk, .cmdk-btn, .kbd { border: 1px solid CanvasText; }
+  .cmdk__opt[aria-selected="true"] { outline: 2px solid Highlight; outline-offset: -2px; }
   :focus-visible { outline-color: Highlight; }
 }
 
 @media print {
   .site-header, .skip-link, .backdrop, .progress, .marquee,
+  .hero__net, .site-footer__giant, .contact__beam, .toast, .cmdk,
   .term, .window, .player, .contact__glow, .nav-toggle, [data-copy] { display: none !important; }
   html, body { background: #fff; color: #000; }
   body { font-size: 11pt; }
@@ -2028,4 +2050,351 @@ a {
   }
   .ref__text, .tile__text, .prose p, .hero__lead, .legal__body p { color: #222; }
   a[href^="http"]::after { content: " (" attr(href) ")"; font-size: 0.85em; color: #555; }
+}
+
+
+/* --- 17 Ausbau (09.11.2026) ---------------------------------- */
+/* Lebendes Netzwerk im Hero, bedienbares Terminal, Befehlspalette,
+   Lichtkante am Kontaktfeld, großer Schriftzug im Footer. */
+
+/* 17.1 Weicher Übergang zwischen den Seiten (wo der Browser es kann) */
+@media (prefers-reduced-motion: no-preference) {
+  @view-transition { navigation: auto; }
+}
+
+/* 17.2 Tastenkappe */
+.kbd {
+  display: inline-grid;
+  place-items: center;
+  min-width: 1.5rem;
+  padding: 0.05rem 0.4rem;
+  border: 1px solid var(--line-2);
+  border-bottom-width: 2px;
+  border-radius: 6px;
+  background: var(--glass-2);
+  color: var(--text-muted);
+  font-family: var(--font-mono);
+  font-size: 0.6875rem;
+  line-height: 1.5;
+  white-space: nowrap;
+}
+
+/* 17.3 Hero: Netzwerk auf dem Raster (zeichnet js/main.js, Abschnitt 10).
+   Reicht bis unter die Kopfzeile, läuft nach unten aus. */
+.hero { isolation: isolate; }
+.hero__net {
+  position: absolute;
+  top: -4.25rem;
+  left: 0;
+  z-index: -1;
+  width: 100%;
+  height: calc(100% + 4.25rem);
+  pointer-events: none;
+  -webkit-mask-image: linear-gradient(#000 55%, transparent);
+  mask-image: linear-gradient(#000 55%, transparent);
+}
+/* Schmal liegt das Netz direkt hinter dem Fließtext – dort leiser */
+@media (max-width: 63.999rem) {
+  .hero__net { opacity: 0.55; }
+}
+
+/* Name: jede Zeile schiebt sich aus ihrer Kante. Füllmodus nur
+   "backwards" – danach wirkt nichts nach. */
+@media (prefers-reduced-motion: no-preference) {
+  .hero__name span { animation: name-in 1.15s var(--ease-out) 0.1s backwards; }
+  .hero__name span + span { animation-delay: 0.24s; }
+}
+@keyframes name-in {
+  from { opacity: 0; clip-path: inset(0 0 100% 0); transform: translate3d(0, 0.4em, 0); }
+  to   { opacity: 1; clip-path: inset(0 0 -20% 0); transform: none; }
+}
+
+/* Ortszeit in der Eckdaten-Leiste */
+.stats__k:has(.stats__clock) {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 0 0.75rem;
+}
+.stats__clock {
+  color: var(--accent);
+  white-space: nowrap;
+}
+
+/* 17.4 Terminal mit Eingabezeile */
+.term {
+  transition: border-color var(--dur) var(--ease), box-shadow var(--dur) var(--ease);
+}
+.term:focus-within {
+  border-color: rgba(94, 234, 212, 0.45);
+  box-shadow: var(--shadow-deep), 0 0 110px -30px rgba(94, 234, 212, 0.5);
+}
+.term.is-live { cursor: text; }
+.term__body {
+  max-height: 31em;
+  overflow-y: auto;
+  scrollbar-width: thin;
+  scrollbar-color: var(--line-2) transparent;
+}
+.term__row {
+  display: flex;
+  align-items: baseline;
+}
+.term__row .tp { flex: none; }
+.term__input {
+  flex: 1;
+  min-width: 0;
+  padding: 0;
+  border: 0;
+  border-radius: 0;
+  background: none;
+  color: var(--text);
+  font: inherit;
+  letter-spacing: inherit;
+  caret-color: var(--accent);
+}
+/* Fokus zeigt der leuchtende Rahmen des Terminals */
+.term__input:focus-visible { outline: 0; }
+.term__input::placeholder { color: var(--text-dim); opacity: 1; }
+/* iOS zoomt bei Eingaben unter 16px in die Seite */
+@media (hover: none) {
+  .term__input { font-size: 16px; }
+}
+.term__link {
+  color: var(--accent-2);
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 3px;
+}
+.term__link:hover { color: var(--accent); }
+.tl--wide { grid-template-columns: 12ch minmax(0, 1fr); padding-left: 0; }
+.t-dim { color: var(--text-dim); }
+.t-err { color: #fca5a5; }
+
+/* 17.5 Knopf für die Befehlspalette in der Kopfzeile */
+.cmdk-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.55rem;
+  flex: none;
+  min-height: 2.5rem;
+  margin-left: auto;
+  padding: 0.3rem 0.5rem 0.3rem 0.8rem;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  background: var(--glass);
+  color: var(--text-muted);
+  font-size: var(--fs-sm);
+  cursor: pointer;
+  transition: color var(--dur-fast) var(--ease),
+              border-color var(--dur-fast) var(--ease),
+              background-color var(--dur-fast) var(--ease);
+}
+.cmdk-btn:hover { color: var(--text); border-color: var(--line-2); background: var(--glass-2); }
+.cmdk-btn svg {
+  flex: none;
+  width: 0.95rem;
+  height: 0.95rem;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.6;
+  stroke-linecap: round;
+}
+@media (max-width: 63.999rem) {
+  .cmdk-btn {
+    justify-content: center;
+    width: 2.75rem;
+    height: 2.75rem;
+    padding: 0;
+    border-radius: 50%;
+  }
+  .cmdk-btn__label, .cmdk-btn__key { display: none; }
+}
+@media (max-width: 47.999rem) {
+  .cmdk-btn { border-color: var(--line-2); background: var(--glass-2); color: var(--text); }
+  .cmdk-btn + .nav-toggle { margin-left: -0.5rem; }
+}
+
+/* 17.6 Befehlspalette (Dialog baut js/main.js, Abschnitt 11) */
+.cmdk {
+  width: min(38rem, calc(100% - 2rem));
+  margin: 13vh auto auto;
+  padding: 0;
+  overflow: hidden;
+  border: 1px solid var(--line-2);
+  border-radius: var(--radius-lg);
+  background: rgba(11, 13, 18, 0.94);
+  color: var(--text);
+  box-shadow: var(--shadow-deep), 0 0 120px -40px rgba(94, 234, 212, 0.4);
+}
+.cmdk::backdrop {
+  background: rgba(3, 4, 6, 0.66);
+  -webkit-backdrop-filter: blur(5px);
+  backdrop-filter: blur(5px);
+}
+@media (prefers-reduced-motion: no-preference) {
+  .cmdk[open] { animation: cmdk-in 0.24s var(--ease-out); }
+}
+@keyframes cmdk-in {
+  from { opacity: 0; transform: translateY(-10px) scale(0.98); }
+}
+.cmdk__head {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.85rem 1.1rem;
+  border-bottom: 1px solid var(--line);
+}
+.cmdk__head svg {
+  flex: none;
+  width: 1.1rem;
+  height: 1.1rem;
+  fill: none;
+  stroke: var(--text-dim);
+  stroke-width: 1.5;
+  stroke-linecap: round;
+}
+.cmdk__input {
+  flex: 1;
+  min-width: 0;
+  padding: 0.25rem 0;
+  border: 0;
+  background: none;
+  color: var(--text);
+  font: inherit;
+  font-size: 1.0625rem;
+  caret-color: var(--accent);
+}
+.cmdk__input:focus-visible { outline: 0; }
+.cmdk__input::placeholder { color: var(--text-dim); opacity: 1; }
+.cmdk__list {
+  max-height: min(23rem, 54vh);
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  padding: 0.4rem;
+  scrollbar-width: thin;
+  scrollbar-color: var(--line-2) transparent;
+}
+.cmdk__opt {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  align-items: center;
+  gap: 1rem;
+  padding: 0.6rem 0.75rem;
+  border-radius: 12px;
+  cursor: pointer;
+}
+.cmdk__opt[aria-selected="true"] {
+  background: var(--glass-3);
+  box-shadow: inset 2px 0 0 var(--accent);
+}
+.cmdk__main {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.cmdk__title { font-size: var(--fs-sm); font-weight: 550; }
+.cmdk__hint {
+  margin-left: 0.6rem;
+  color: var(--text-dim);
+  font-family: var(--font-mono);
+  font-size: 0.6875rem;
+}
+.cmdk__kind {
+  color: var(--text-dim);
+  font-family: var(--font-mono);
+  font-size: 0.625rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+.cmdk__opt[aria-selected="true"] .cmdk__kind { color: var(--accent); }
+.cmdk__empty {
+  padding: 1.75rem 1rem;
+  color: var(--text-muted);
+  font-size: var(--fs-sm);
+  text-align: center;
+}
+.cmdk__foot {
+  display: flex;
+  align-items: center;
+  gap: 1.1rem;
+  padding: 0.6rem 1.1rem;
+  border-top: 1px solid var(--line);
+  color: var(--text-dim);
+  font-size: var(--fs-xs);
+}
+.cmdk__foot span { display: inline-flex; align-items: center; gap: 0.35rem; }
+@media (hover: none) {
+  .cmdk__foot { display: none; }
+}
+
+/* Kurze Rückmeldung am unteren Rand (z. B. "Adresse kopiert") */
+.toast {
+  position: fixed;
+  left: 50%;
+  bottom: 1.5rem;
+  z-index: 80;
+  max-width: calc(100% - 2rem);
+  padding: 0.6rem 1.1rem;
+  border: 1px solid rgba(94, 234, 212, 0.4);
+  border-radius: 999px;
+  background: rgba(11, 13, 18, 0.94);
+  color: var(--accent);
+  font-size: var(--fs-sm);
+  font-weight: 550;
+  box-shadow: var(--shadow-deep);
+  opacity: 0;
+  translate: -50% 0.5rem;
+  pointer-events: none;
+  transition: opacity var(--dur) var(--ease), translate var(--dur) var(--ease);
+}
+.toast.is-on { opacity: 1; translate: -50% 0; }
+
+/* 17.7 Kontakt: ein Lichtpunkt wandert um den Rahmen. Die Haarlinie
+   steckt mit im Element, deshalb ist der eigentliche Rand durchsichtig. */
+@property --beam {
+  syntax: "<angle>";
+  inherits: false;
+  initial-value: 0deg;
+}
+.contact { border-color: transparent; }
+.contact__beam {
+  position: absolute;
+  inset: 0;
+  padding: 1px;
+  border-radius: inherit;
+  background:
+    conic-gradient(from var(--beam), transparent 0 62%, rgba(94, 234, 212, 0.95) 80%, rgba(165, 180, 252, 0.95) 90%, transparent 100%),
+    linear-gradient(var(--line-2), var(--line-2));
+  -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+  -webkit-mask-composite: xor;
+  mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+  mask-composite: exclude;
+  pointer-events: none;
+}
+@media (prefers-reduced-motion: no-preference) {
+  .contact__beam { animation: beam 9s linear infinite; }
+}
+@keyframes beam { to { --beam: 360deg; } }
+
+/* 17.8 Footer: großer Schriftzug, unten angeschnitten */
+.site-footer { overflow: hidden; }
+.site-footer:has(.site-footer__giant) { padding-bottom: 0; }
+.site-footer__giant {
+  margin-top: clamp(1.75rem, 4vw, 3rem);
+  margin-bottom: -0.12em;
+  text-align: center;
+  white-space: nowrap;
+  font-size: clamp(2.6rem, 13.2vw, 12.5rem);
+  font-weight: 700;
+  line-height: 0.9;
+  letter-spacing: -0.06em;
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.2) 15%, rgba(255, 255, 255, 0.03) 95%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  -webkit-text-stroke: 1px rgba(255, 255, 255, 0.09);
+  -webkit-user-select: none;
+  user-select: none;
+  pointer-events: none;
 }

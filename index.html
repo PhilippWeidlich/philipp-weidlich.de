@@ -45,10 +45,10 @@
 
   <!-- ---------- Assets ---------- -->
   <link rel="preload" href="assets/fonts/InterVariable.woff2" as="font" type="font/woff2" crossorigin>
-  <link rel="stylesheet" href="css/style.css?v=4">
-  <link rel="stylesheet" href="css/ahrcomp-mini.css?v=4">
-  <noscript><link rel="stylesheet" href="css/no-js.css?v=4"></noscript>
-  <script src="js/main.js?v=4" defer></script>
+  <link rel="stylesheet" href="css/style.css?v=5">
+  <link rel="stylesheet" href="css/ahrcomp-mini.css?v=5">
+  <noscript><link rel="stylesheet" href="css/no-js.css?v=5"></noscript>
+  <script src="js/main.js?v=5" defer></script>
 
   <!-- Strukturierte Daten: reine Datenauszeichnung, kein ausführbares Skript. -->
   <script type="application/ld+json">
@@ -99,6 +99,14 @@
         <span class="wordmark__name">Philipp&nbsp;Weidlich</span>
       </a>
 
+      <!-- Befehlspalette (Strg/⌘ + K): erscheint nur mit JavaScript,
+           den Dialog selbst baut js/main.js (Abschnitt 11). -->
+      <button class="cmdk-btn" type="button" data-cmdk-open aria-haspopup="dialog" aria-label="Suchen und springen (Befehlspalette)" hidden>
+        <svg viewBox="0 0 16 16" aria-hidden="true" focusable="false"><circle cx="7" cy="7" r="4.5"/><path d="m10.5 10.5 3 3"/></svg>
+        <span class="cmdk-btn__label">Suchen</span>
+        <kbd class="kbd cmdk-btn__key" aria-hidden="true" data-cmdk-key>Strg K</kbd>
+      </button>
+
       <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="site-nav" hidden>
         <span class="nav-toggle__bars" aria-hidden="true"><i></i><i></i></span>
         <span class="vh">Menü</span>
@@ -117,6 +125,9 @@
 
     <!-- ==================== 1. Hero ==================== -->
     <section class="hero" aria-labelledby="hero-name">
+      <!-- Lebendes Netzwerk hinter dem Hero: Knoten auf dem Raster, Pakete
+           laufen über die Leitungen (js/main.js, Abschnitt 10). Rein dekorativ. -->
+      <canvas class="hero__net" aria-hidden="true" data-net></canvas>
       <div class="container">
         <div class="hero__grid">
 
@@ -126,7 +137,7 @@
               Angehender Fachinformatiker für Systemintegration
             </p>
 
-            <h1 class="hero__name reveal" id="hero-name">
+            <h1 class="hero__name" id="hero-name">
               <span>Philipp</span>
               <span>Weidlich</span>
             </h1>
@@ -156,27 +167,38 @@
             </p>
           </div>
 
-          <!-- Terminal: wiederholt nur Inhalte, die auch im Text stehen –
-               deshalb für Screenreader ausgeblendet. js/main.js tippt die
-               Befehle nach; ohne JS steht alles sofort da. -->
-          <div class="term reveal" aria-hidden="true" data-term>
-            <div class="term__bar">
+          <!-- Terminal: der Vorspann wiederholt nur Inhalte, die auch im Text
+               stehen – deshalb für Screenreader ausgeblendet. js/main.js tippt
+               die Befehle nach und schaltet danach die Eingabezeile frei
+               (echte Befehle: help, ls, cat, cd …). Ohne JS steht der Vorspann
+               sofort da, die Eingabezeile bleibt ausgeblendet. -->
+          <div class="term reveal" role="group" aria-label="Terminal (optional, zum Ausprobieren)" data-term>
+            <div class="term__bar" aria-hidden="true">
               <span class="dots"><i></i><i></i><i></i></span>
               <span class="term__title">philipp@ahrtal: ~</span>
               <span class="term__tag">bash</span>
             </div>
             <div class="term__body">
-              <div class="tl tl--cmd"><span class="tp">~ $</span><span class="tc">whoami</span></div>
-              <div class="tl">philipp-weidlich</div>
-              <div class="tl tl--gap tl--cmd"><span class="tp">~ $</span><span class="tc">systemctl status philipp</span></div>
-              <div class="tl"><span class="t-ok">●</span> philipp.service – angehender Fachinformatiker</div>
-              <div class="tl tl--kv"><span class="tk">Status:</span><span><span class="t-ok">aktiv (läuft)</span> · AhrComp</span></div>
-              <div class="tl tl--kv"><span class="tk">Fokus:</span><span>Netzwerk · Server · Hardware</span></div>
-              <div class="tl tl--kv"><span class="tk">Dazu:</span><span>Frontend · Self-Hosting</span></div>
-              <div class="tl tl--kv"><span class="tk">Ort:</span><span>Bad Neuenahr-Ahrweiler</span></div>
-              <div class="tl tl--gap tl--cmd"><span class="tp">~ $</span><span class="tc">cat kontakt.txt</span></div>
-              <div class="tl"><span class="t-acc">philippweidlich@proton.me</span></div>
-              <div class="tl tl--gap tl--cmd is-current"><span class="tp">~ $</span><span class="tc"></span></div>
+              <div class="term__intro" aria-hidden="true">
+                <div class="tl tl--cmd"><span class="tp">~ $</span><span class="tc">whoami</span></div>
+                <div class="tl">philipp-weidlich</div>
+                <div class="tl tl--gap tl--cmd"><span class="tp">~ $</span><span class="tc">systemctl status philipp</span></div>
+                <div class="tl"><span class="t-ok">●</span> philipp.service – angehender Fachinformatiker</div>
+                <div class="tl tl--kv"><span class="tk">Status:</span><span><span class="t-ok">aktiv (läuft)</span> · AhrComp</span></div>
+                <div class="tl tl--kv"><span class="tk">Fokus:</span><span>Netzwerk · Server · Hardware</span></div>
+                <div class="tl tl--kv"><span class="tk">Dazu:</span><span>Frontend · Self-Hosting</span></div>
+                <div class="tl tl--kv"><span class="tk">Ort:</span><span>Bad Neuenahr-Ahrweiler</span></div>
+                <div class="tl tl--gap tl--cmd"><span class="tp">~ $</span><span class="tc">cat kontakt.txt</span></div>
+                <div class="tl"><span class="t-acc">philippweidlich@proton.me</span></div>
+                <div class="tl tl--gap tl--cmd is-current" data-term-idle><span class="tp">~ $</span><span class="tc"></span></div>
+              </div>
+              <div class="term__out" role="log" aria-live="polite" aria-label="Terminal-Ausgabe" data-term-out></div>
+              <div class="tl tl--gap tl--cmd term__row" data-term-row hidden>
+                <label class="tp" for="term-input">~ $<span class="vh"> Befehl eingeben, „help“ zeigt alle Befehle</span></label>
+                <input class="term__input" id="term-input" type="text" data-term-input
+                       placeholder="help eingeben …" maxlength="80" enterkeyhint="go"
+                       autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false">
+              </div>
             </div>
           </div>
 
@@ -185,7 +207,7 @@
         <!-- Eckdaten -->
         <ul class="stats reveal" role="list">
           <li>
-            <span class="stats__k">Standort</span>
+            <span class="stats__k">Standort <span class="stats__clock" data-clock hidden></span></span>
             <span class="stats__v">Bad Neuenahr-Ahrweiler</span>
           </li>
           <li>
@@ -891,6 +913,7 @@
     <section class="section section--contact" id="kontakt" aria-labelledby="kontakt-title">
       <div class="container">
         <div class="contact spot reveal">
+          <div class="contact__beam" aria-hidden="true"></div>
           <div class="contact__glow" aria-hidden="true"></div>
           <p class="eyebrow eyebrow--center"><span class="eyebrow__num">04</span><span class="eyebrow__rule" aria-hidden="true"></span>Kontakt</p>
           <h2 class="contact__title" id="kontakt-title">
@@ -950,6 +973,8 @@
         <p class="site-footer__build mono">statisch gebaut · keine Cookies · kein Tracking</p>
       </div>
     </div>
+    <!-- Großer Schriftzug als Abschluss, rein dekorativ -->
+    <p class="site-footer__giant" aria-hidden="true">Philipp Weidlich</p>
   </footer>
 </body>
 </html>
